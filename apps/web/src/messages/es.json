@@ -1,0 +1,395 @@
+{
+  "metadata": {
+    "title": "Exora - Infraestructura de Pagos Moderna",
+    "description": "La plataforma de pagos completa para negocios en Internet. Acepta pagos, gestiona suscripciones y escala globalmente."
+  },
+  "common": {
+    "getStarted": "Comenzar",
+    "learnMore": "Saber más",
+    "viewDocs": "Ver documentación",
+    "signIn": "Iniciar sesión",
+    "signUp": "Registrarse",
+    "signOut": "Cerrar sesión",
+    "dashboard": "Panel de control",
+    "settings": "Configuración",
+    "support": "Soporte",
+    "loading": "Cargando...",
+    "error": "Error",
+    "success": "Éxito",
+    "cancel": "Cancelar",
+    "save": "Guardar",
+    "delete": "Eliminar",
+    "edit": "Editar",
+    "create": "Crear",
+    "search": "Buscar",
+    "filter": "Filtrar",
+    "export": "Exportar",
+    "import": "Importar",
+    "back": "Volver",
+    "next": "Siguiente",
+    "previous": "Anterior",
+    "submit": "Enviar",
+    "confirm": "Confirmar",
+    "close": "Cerrar",
+    "copy": "Copiar",
+    "copied": "¡Copiado!",
+    "language": "Idioma",
+    "theme": "Tema",
+    "lightMode": "Modo claro",
+    "darkMode": "Modo oscuro",
+    "systemMode": "Sistema"
+  },
+  "nav": {
+    "products": "Productos",
+    "solutions": "Soluciones",
+    "developers": "Desarrolladores",
+    "resources": "Recursos",
+    "pricing": "Precios",
+    "docs": "Documentación",
+    "api": "Referencia API",
+    "blog": "Blog",
+    "changelog": "Historial de cambios"
+  },
+  "landing": {
+    "hero": {
+      "badge": "Confianza de más de 10.000 empresas en todo el mundo",
+      "title": "Infraestructura de pagos para Internet",
+      "subtitle": "Acepta pagos, envía pagos globalmente y automatiza procesos financieros con nuestra API unificada.",
+      "cta": {
+        "primary": "Comenzar ahora",
+        "secondary": "Contactar ventas"
+      },
+      "stats": {
+        "transactions": "Transacciones procesadas",
+        "countries": "Países soportados",
+        "uptime": "SLA de disponibilidad",
+        "developers": "Desarrolladores activos"
+      }
+    },
+    "features": {
+      "title": "Todo lo que necesitas para aceptar pagos",
+      "subtitle": "Construye experiencias de pago sofisticadas con nuestro conjunto completo de APIs y herramientas.",
+      "payments": {
+        "title": "Pagos globales",
+        "description": "Acepta más de 135 monedas y docenas de métodos de pago en una sola integración."
+      },
+      "subscriptions": {
+        "title": "Suscripciones",
+        "description": "Gestiona ingresos recurrentes con lógica de facturación flexible y recordatorios inteligentes."
+      },
+      "invoicing": {
+        "title": "Facturación",
+        "description": "Crea, envía y rastrea facturas con recordatorios de pago automáticos."
+      },
+      "connect": {
+        "title": "Connect",
+        "description": "Construye plataformas y marketplaces con pagos multipartitos."
+      },
+      "terminal": {
+        "title": "Terminal",
+        "description": "Unifica pagos online y presenciales con soluciones POS personalizables."
+      },
+      "security": {
+        "title": "Seguridad y cumplimiento",
+        "description": "Certificación PCI DSS Nivel 1 con protección contra fraude integrada."
+      }
+    },
+    "integration": {
+      "title": "Integra en minutos, no semanas",
+      "subtitle": "Nuestro enfoque orientado a desarrolladores significa que puedes empezar a aceptar pagos con solo unas líneas de código.",
+      "tabs": {
+        "node": "Node.js",
+        "python": "Python",
+        "ruby": "Ruby",
+        "go": "Go",
+        "php": "PHP"
+      }
+    },
+    "testimonials": {
+      "title": "Amado por desarrolladores",
+      "subtitle": "Descubre lo que dicen nuestros clientes sobre su experiencia con Exora."
+    },
+    "pricing": {
+      "title": "Precios simples y transparentes",
+      "subtitle": "Paga solo por lo que usas. Sin tarifas ocultas, sin sorpresas.",
+      "perTransaction": "por transacción exitosa",
+      "features": {
+        "cards": "Todas las tarjetas principales",
+        "wallets": "Billeteras digitales",
+        "support": "Soporte 24/7",
+        "api": "Acceso completo a API",
+        "webhooks": "Webhooks en tiempo real",
+        "analytics": "Análisis avanzado"
+      }
+    },
+    "cta": {
+      "title": "¿Listo para empezar?",
+      "subtitle": "Crea tu cuenta y empieza a aceptar pagos en minutos.",
+      "button": "Crear cuenta gratis"
+    },
+    "footer": {
+      "products": {
+        "title": "Productos",
+        "payments": "Pagos",
+        "subscriptions": "Suscripciones",
+        "invoicing": "Facturación",
+        "connect": "Connect",
+        "terminal": "Terminal"
+      },
+      "developers": {
+        "title": "Desarrolladores",
+        "documentation": "Documentación",
+        "apiReference": "Referencia API",
+        "sdks": "SDKs y librerías",
+        "plugins": "Plugins",
+        "samples": "Ejemplos de código"
+      },
+      "company": {
+        "title": "Empresa",
+        "about": "Acerca de",
+        "blog": "Blog",
+        "careers": "Carreras",
+        "press": "Prensa",
+        "partners": "Socios"
+      },
+      "legal": {
+        "title": "Legal",
+        "privacy": "Política de privacidad",
+        "terms": "Términos de servicio",
+        "cookies": "Política de cookies",
+        "compliance": "Cumplimiento"
+      },
+      "copyright": "© {year} Exora, Inc. Todos los derechos reservados."
+    }
+  },
+  "dashboard": {
+    "title": "Panel de control",
+    "welcome": "Bienvenido de vuelta, {name}",
+    "overview": {
+      "title": "Resumen",
+      "totalRevenue": "Ingresos totales",
+      "totalTransactions": "Total de transacciones",
+      "successRate": "Tasa de éxito",
+      "activeCustomers": "Clientes activos",
+      "comparedToLastMonth": "comparado con el mes pasado"
+    },
+    "payments": {
+      "title": "Pagos",
+      "all": "Todos los pagos",
+      "successful": "Exitosos",
+      "pending": "Pendientes",
+      "failed": "Fallidos",
+      "refunded": "Reembolsados",
+      "create": "Crear pago",
+      "amount": "Monto",
+      "status": "Estado",
+      "customer": "Cliente",
+      "date": "Fecha",
+      "method": "Método"
+    },
+    "customers": {
+      "title": "Clientes",
+      "all": "Todos los clientes",
+      "active": "Activos",
+      "inactive": "Inactivos",
+      "create": "Añadir cliente",
+      "name": "Nombre",
+      "email": "Email",
+      "joined": "Fecha de registro",
+      "totalSpent": "Total gastado"
+    },
+    "invoices": {
+      "title": "Facturas",
+      "all": "Todas las facturas",
+      "draft": "Borradores",
+      "sent": "Enviadas",
+      "paid": "Pagadas",
+      "overdue": "Vencidas",
+      "create": "Crear factura",
+      "number": "Factura #",
+      "customer": "Cliente",
+      "amount": "Monto",
+      "dueDate": "Fecha de vencimiento",
+      "status": "Estado"
+    },
+    "apiKeys": {
+      "title": "Claves API",
+      "description": "Gestiona tus claves API para diferentes entornos",
+      "publishable": "Clave pública",
+      "secret": "Clave secreta",
+      "test": "Modo de prueba",
+      "live": "Modo producción",
+      "create": "Crear nueva clave",
+      "revoke": "Revocar",
+      "lastUsed": "Último uso",
+      "warning": "Mantén tus claves secretas confidenciales. No las compartas en repositorios públicos."
+    },
+    "webhooks": {
+      "title": "Webhooks",
+      "description": "Configura endpoints para recibir eventos en tiempo real",
+      "create": "Añadir endpoint",
+      "url": "URL del endpoint",
+      "events": "Eventos",
+      "status": "Estado",
+      "active": "Activo",
+      "disabled": "Desactivado"
+    },
+    "settings": {
+      "title": "Configuración",
+      "profile": "Perfil",
+      "team": "Equipo",
+      "billing": "Facturación",
+      "notifications": "Notificaciones",
+      "security": "Seguridad",
+      "integrations": "Integraciones",
+      "language": "Idioma y región"
+    }
+  },
+  "payment": {
+    "title": "Completa tu pago",
+    "amount": "Monto a pagar",
+    "card": {
+      "title": "Información de tarjeta",
+      "number": "Número de tarjeta",
+      "expiry": "Fecha de vencimiento",
+      "cvc": "CVC",
+      "name": "Nombre en la tarjeta"
+    },
+    "billing": {
+      "title": "Dirección de facturación",
+      "email": "Email",
+      "country": "País",
+      "address": "Dirección",
+      "city": "Ciudad",
+      "postalCode": "Código postal"
+    },
+    "button": "Pagar {amount}",
+    "processing": "Procesando pago...",
+    "success": {
+      "title": "Pago exitoso",
+      "description": "Gracias por tu pago. Se ha enviado una confirmación a {email}.",
+      "receipt": "Ver recibo"
+    },
+    "error": {
+      "title": "Pago fallido",
+      "description": "Tu pago no pudo ser procesado. Por favor, intenta de nuevo.",
+      "cardDeclined": "Tu tarjeta fue rechazada.",
+      "insufficientFunds": "Fondos insuficientes.",
+      "invalidCard": "Información de tarjeta inválida.",
+      "expired": "Este enlace de pago ha expirado.",
+      "tryAgain": "Intentar de nuevo"
+    },
+    "secure": "Tu pago está protegido con encriptación SSL de 256 bits"
+  },
+  "docs": {
+    "title": "Documentación",
+    "search": "Buscar en documentación...",
+    "gettingStarted": {
+      "title": "Primeros pasos",
+      "introduction": "Introducción",
+      "quickstart": "Guía rápida",
+      "installation": "Instalación",
+      "authentication": "Autenticación"
+    },
+    "guides": {
+      "title": "Guías",
+      "acceptPayments": "Aceptar pagos",
+      "subscriptions": "Gestionar suscripciones",
+      "invoicing": "Enviar facturas",
+      "webhooks": "Manejar webhooks",
+      "testing": "Pruebas"
+    },
+    "api": {
+      "title": "Referencia API",
+      "overview": "Resumen",
+      "authentication": "Autenticación",
+      "errors": "Manejo de errores",
+      "pagination": "Paginación",
+      "versioning": "Versionado"
+    },
+    "sdks": {
+      "title": "SDKs y librerías",
+      "nodejs": "Node.js",
+      "python": "Python",
+      "ruby": "Ruby",
+      "go": "Go",
+      "php": "PHP"
+    }
+  },
+  "errors": {
+    "notFound": {
+      "title": "Página no encontrada",
+      "description": "Lo sentimos, no pudimos encontrar la página que buscas.",
+      "action": "Ir al inicio"
+    },
+    "serverError": {
+      "title": "Error del servidor",
+      "description": "Algo salió mal de nuestra parte. Por favor, intenta más tarde.",
+      "action": "Actualizar"
+    },
+    "unauthorized": {
+      "title": "No autorizado",
+      "description": "Necesitas iniciar sesión para acceder a esta página.",
+      "action": "Iniciar sesión"
+    },
+    "forbidden": {
+      "title": "Acceso denegado",
+      "description": "No tienes permiso para acceder a este recurso.",
+      "action": "Volver"
+    },
+    "validation": {
+      "required": "Este campo es obligatorio",
+      "email": "Por favor, introduce un email válido",
+      "minLength": "Debe tener al menos {min} caracteres",
+      "maxLength": "Debe tener como máximo {max} caracteres",
+      "pattern": "Formato inválido",
+      "passwordMatch": "Las contraseñas no coinciden"
+    }
+  },
+  "auth": {
+    "signIn": {
+      "title": "Inicia sesión en Exora",
+      "subtitle": "¡Bienvenido de vuelta! Introduce tus credenciales.",
+      "email": "Dirección de email",
+      "password": "Contraseña",
+      "rememberMe": "Recordarme",
+      "forgotPassword": "¿Olvidaste tu contraseña?",
+      "button": "Iniciar sesión",
+      "noAccount": "¿No tienes cuenta?",
+      "signUp": "Regístrate"
+    },
+    "signUp": {
+      "title": "Crea tu cuenta",
+      "subtitle": "Empieza a aceptar pagos en minutos.",
+      "name": "Nombre completo",
+      "email": "Dirección de email",
+      "password": "Contraseña",
+      "confirmPassword": "Confirmar contraseña",
+      "terms": "Acepto los Términos de servicio y la Política de privacidad",
+      "button": "Crear cuenta",
+      "hasAccount": "¿Ya tienes cuenta?",
+      "signIn": "Inicia sesión"
+    },
+    "forgotPassword": {
+      "title": "Recupera tu contraseña",
+      "subtitle": "Introduce tu email y te enviaremos un enlace de recuperación.",
+      "email": "Dirección de email",
+      "button": "Enviar enlace",
+      "backToSignIn": "Volver al inicio de sesión"
+    },
+    "resetPassword": {
+      "title": "Establece nueva contraseña",
+      "subtitle": "Introduce tu nueva contraseña abajo.",
+      "password": "Nueva contraseña",
+      "confirmPassword": "Confirmar contraseña",
+      "button": "Restablecer contraseña"
+    }
+  },
+  "widget": {
+    "title": "Pago",
+    "poweredBy": "Desarrollado por Exora",
+    "processing": "Procesando...",
+    "success": "¡Pago exitoso!",
+    "error": "Pago fallido. Por favor, intenta de nuevo."
+  }
+}

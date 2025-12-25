@@ -1,0 +1,395 @@
+{
+  "metadata": {
+    "title": "Exora - 最新の決済インフラ",
+    "description": "インターネットビジネスのための完全な決済プラットフォーム。決済を受け付け、サブスクリプションを管理し、グローバルに拡大。"
+  },
+  "common": {
+    "getStarted": "始める",
+    "learnMore": "詳細を見る",
+    "viewDocs": "ドキュメントを見る",
+    "signIn": "ログイン",
+    "signUp": "新規登録",
+    "signOut": "ログアウト",
+    "dashboard": "ダッシュボード",
+    "settings": "設定",
+    "support": "サポート",
+    "loading": "読み込み中...",
+    "error": "エラー",
+    "success": "成功",
+    "cancel": "キャンセル",
+    "save": "保存",
+    "delete": "削除",
+    "edit": "編集",
+    "create": "作成",
+    "search": "検索",
+    "filter": "フィルター",
+    "export": "エクスポート",
+    "import": "インポート",
+    "back": "戻る",
+    "next": "次へ",
+    "previous": "前へ",
+    "submit": "送信",
+    "confirm": "確認",
+    "close": "閉じる",
+    "copy": "コピー",
+    "copied": "コピーしました！",
+    "language": "言語",
+    "theme": "テーマ",
+    "lightMode": "ライトモード",
+    "darkMode": "ダークモード",
+    "systemMode": "システム"
+  },
+  "nav": {
+    "products": "製品",
+    "solutions": "ソリューション",
+    "developers": "開発者",
+    "resources": "リソース",
+    "pricing": "料金",
+    "docs": "ドキュメント",
+    "api": "APIリファレンス",
+    "blog": "ブログ",
+    "changelog": "変更履歴"
+  },
+  "landing": {
+    "hero": {
+      "badge": "世界中の10,000以上の企業に信頼されています",
+      "title": "インターネットのための決済インフラ",
+      "subtitle": "統一されたAPIで決済を受け付け、グローバルに送金し、財務プロセスを自動化します。",
+      "cta": {
+        "primary": "今すぐ始める",
+        "secondary": "営業に問い合わせ"
+      },
+      "stats": {
+        "transactions": "処理済み取引",
+        "countries": "対応国",
+        "uptime": "稼働率SLA",
+        "developers": "アクティブ開発者"
+      }
+    },
+    "features": {
+      "title": "決済に必要なすべて",
+      "subtitle": "包括的なAPIとツールスイートで洗練された決済体験を構築。",
+      "payments": {
+        "title": "グローバル決済",
+        "description": "135以上の通貨と数十の決済方法を単一の統合で受け付け。"
+      },
+      "subscriptions": {
+        "title": "サブスクリプション",
+        "description": "柔軟な課金ロジックとスマートな督促で定期収益を管理。"
+      },
+      "invoicing": {
+        "title": "請求書発行",
+        "description": "自動支払いリマインダー付きで請求書を作成、送信、追跡。"
+      },
+      "connect": {
+        "title": "Connect",
+        "description": "マルチパーティ決済でプラットフォームとマーケットプレイスを構築。"
+      },
+      "terminal": {
+        "title": "ターミナル",
+        "description": "カスタマイズ可能なPOSソリューションでオンラインと対面決済を統合。"
+      },
+      "security": {
+        "title": "セキュリティとコンプライアンス",
+        "description": "不正防止機能を内蔵したPCI DSSレベル1認証。"
+      }
+    },
+    "integration": {
+      "title": "週単位ではなく分単位で統合",
+      "subtitle": "開発者ファーストのアプローチで、数行のコードで決済を受け付け開始。",
+      "tabs": {
+        "node": "Node.js",
+        "python": "Python",
+        "ruby": "Ruby",
+        "go": "Go",
+        "php": "PHP"
+      }
+    },
+    "testimonials": {
+      "title": "開発者に愛されています",
+      "subtitle": "お客様のExora体験についての声をご覧ください。"
+    },
+    "pricing": {
+      "title": "シンプルで透明な料金",
+      "subtitle": "使った分だけお支払い。隠れた手数料なし、サプライズなし。",
+      "perTransaction": "成功した取引ごと",
+      "features": {
+        "cards": "すべての主要クレジットカード",
+        "wallets": "デジタルウォレット",
+        "support": "24時間365日サポート",
+        "api": "完全なAPIアクセス",
+        "webhooks": "リアルタイムWebhooks",
+        "analytics": "高度な分析"
+      }
+    },
+    "cta": {
+      "title": "始める準備はできましたか？",
+      "subtitle": "アカウントを作成して、数分で決済を受け付け開始。",
+      "button": "無料アカウントを作成"
+    },
+    "footer": {
+      "products": {
+        "title": "製品",
+        "payments": "決済",
+        "subscriptions": "サブスクリプション",
+        "invoicing": "請求書発行",
+        "connect": "Connect",
+        "terminal": "ターミナル"
+      },
+      "developers": {
+        "title": "開発者",
+        "documentation": "ドキュメント",
+        "apiReference": "APIリファレンス",
+        "sdks": "SDKとライブラリ",
+        "plugins": "プラグイン",
+        "samples": "コードサンプル"
+      },
+      "company": {
+        "title": "会社",
+        "about": "会社概要",
+        "blog": "ブログ",
+        "careers": "採用",
+        "press": "プレス",
+        "partners": "パートナー"
+      },
+      "legal": {
+        "title": "法的情報",
+        "privacy": "プライバシーポリシー",
+        "terms": "利用規約",
+        "cookies": "Cookieポリシー",
+        "compliance": "コンプライアンス"
+      },
+      "copyright": "© {year} Exora, Inc. All rights reserved."
+    }
+  },
+  "dashboard": {
+    "title": "ダッシュボード",
+    "welcome": "おかえりなさい、{name}さん",
+    "overview": {
+      "title": "概要",
+      "totalRevenue": "総収益",
+      "totalTransactions": "総取引数",
+      "successRate": "成功率",
+      "activeCustomers": "アクティブ顧客",
+      "comparedToLastMonth": "先月比"
+    },
+    "payments": {
+      "title": "決済",
+      "all": "すべての決済",
+      "successful": "成功",
+      "pending": "処理中",
+      "failed": "失敗",
+      "refunded": "返金済み",
+      "create": "決済を作成",
+      "amount": "金額",
+      "status": "ステータス",
+      "customer": "顧客",
+      "date": "日付",
+      "method": "方法"
+    },
+    "customers": {
+      "title": "顧客",
+      "all": "すべての顧客",
+      "active": "アクティブ",
+      "inactive": "非アクティブ",
+      "create": "顧客を追加",
+      "name": "名前",
+      "email": "メール",
+      "joined": "登録日",
+      "totalSpent": "合計支出"
+    },
+    "invoices": {
+      "title": "請求書",
+      "all": "すべての請求書",
+      "draft": "下書き",
+      "sent": "送信済み",
+      "paid": "支払済み",
+      "overdue": "期限超過",
+      "create": "請求書を作成",
+      "number": "請求書番号",
+      "customer": "顧客",
+      "amount": "金額",
+      "dueDate": "支払期限",
+      "status": "ステータス"
+    },
+    "apiKeys": {
+      "title": "APIキー",
+      "description": "異なる環境のAPIキーを管理",
+      "publishable": "公開キー",
+      "secret": "秘密キー",
+      "test": "テストモード",
+      "live": "本番モード",
+      "create": "新しいキーを作成",
+      "revoke": "取り消し",
+      "lastUsed": "最終使用",
+      "warning": "秘密キーは機密に保管してください。公開リポジトリで共有しないでください。"
+    },
+    "webhooks": {
+      "title": "Webhooks",
+      "description": "リアルタイムイベントを受信するエンドポイントを設定",
+      "create": "エンドポイントを追加",
+      "url": "エンドポイントURL",
+      "events": "イベント",
+      "status": "ステータス",
+      "active": "アクティブ",
+      "disabled": "無効"
+    },
+    "settings": {
+      "title": "設定",
+      "profile": "プロフィール",
+      "team": "チーム",
+      "billing": "請求",
+      "notifications": "通知",
+      "security": "セキュリティ",
+      "integrations": "統合",
+      "language": "言語と地域"
+    }
+  },
+  "payment": {
+    "title": "お支払いを完了",
+    "amount": "支払い金額",
+    "card": {
+      "title": "カード情報",
+      "number": "カード番号",
+      "expiry": "有効期限",
+      "cvc": "CVC",
+      "name": "カード名義"
+    },
+    "billing": {
+      "title": "請求先住所",
+      "email": "メール",
+      "country": "国",
+      "address": "住所",
+      "city": "市区町村",
+      "postalCode": "郵便番号"
+    },
+    "button": "{amount}を支払う",
+    "processing": "決済処理中...",
+    "success": {
+      "title": "お支払い完了",
+      "description": "お支払いありがとうございます。確認メールを{email}に送信しました。",
+      "receipt": "領収書を見る"
+    },
+    "error": {
+      "title": "決済失敗",
+      "description": "お支払いを処理できませんでした。もう一度お試しください。",
+      "cardDeclined": "カードが拒否されました。",
+      "insufficientFunds": "残高不足です。",
+      "invalidCard": "カード情報が無効です。",
+      "expired": "この決済リンクは期限切れです。",
+      "tryAgain": "再試行"
+    },
+    "secure": "お支払いは256ビットSSL暗号化で保護されています"
+  },
+  "docs": {
+    "title": "ドキュメント",
+    "search": "ドキュメントを検索...",
+    "gettingStarted": {
+      "title": "はじめに",
+      "introduction": "イントロダクション",
+      "quickstart": "クイックスタート",
+      "installation": "インストール",
+      "authentication": "認証"
+    },
+    "guides": {
+      "title": "ガイド",
+      "acceptPayments": "決済を受け付ける",
+      "subscriptions": "サブスクリプションを管理",
+      "invoicing": "請求書を送信",
+      "webhooks": "Webhooksを処理",
+      "testing": "テスト"
+    },
+    "api": {
+      "title": "APIリファレンス",
+      "overview": "概要",
+      "authentication": "認証",
+      "errors": "エラー処理",
+      "pagination": "ページネーション",
+      "versioning": "バージョニング"
+    },
+    "sdks": {
+      "title": "SDKとライブラリ",
+      "nodejs": "Node.js",
+      "python": "Python",
+      "ruby": "Ruby",
+      "go": "Go",
+      "php": "PHP"
+    }
+  },
+  "errors": {
+    "notFound": {
+      "title": "ページが見つかりません",
+      "description": "申し訳ありませんが、お探しのページは見つかりませんでした。",
+      "action": "ホームへ戻る"
+    },
+    "serverError": {
+      "title": "サーバーエラー",
+      "description": "問題が発生しました。後でもう一度お試しください。",
+      "action": "更新"
+    },
+    "unauthorized": {
+      "title": "認証が必要",
+      "description": "このページにアクセスするにはログインが必要です。",
+      "action": "ログイン"
+    },
+    "forbidden": {
+      "title": "アクセス拒否",
+      "description": "このリソースにアクセスする権限がありません。",
+      "action": "戻る"
+    },
+    "validation": {
+      "required": "この項目は必須です",
+      "email": "有効なメールアドレスを入力してください",
+      "minLength": "{min}文字以上で入力してください",
+      "maxLength": "{max}文字以内で入力してください",
+      "pattern": "形式が無効です",
+      "passwordMatch": "パスワードが一致しません"
+    }
+  },
+  "auth": {
+    "signIn": {
+      "title": "Exoraにログイン",
+      "subtitle": "おかえりなさい！認証情報を入力して続行してください。",
+      "email": "メールアドレス",
+      "password": "パスワード",
+      "rememberMe": "ログインを保持",
+      "forgotPassword": "パスワードをお忘れですか？",
+      "button": "ログイン",
+      "noAccount": "アカウントをお持ちでないですか？",
+      "signUp": "新規登録"
+    },
+    "signUp": {
+      "title": "アカウントを作成",
+      "subtitle": "数分で決済を受け付け開始。",
+      "name": "氏名",
+      "email": "メールアドレス",
+      "password": "パスワード",
+      "confirmPassword": "パスワード確認",
+      "terms": "利用規約とプライバシーポリシーに同意します",
+      "button": "アカウントを作成",
+      "hasAccount": "すでにアカウントをお持ちですか？",
+      "signIn": "ログイン"
+    },
+    "forgotPassword": {
+      "title": "パスワードをリセット",
+      "subtitle": "メールアドレスを入力すると、リセットリンクをお送りします。",
+      "email": "メールアドレス",
+      "button": "リセットリンクを送信",
+      "backToSignIn": "ログインに戻る"
+    },
+    "resetPassword": {
+      "title": "新しいパスワードを設定",
+      "subtitle": "以下に新しいパスワードを入力してください。",
+      "password": "新しいパスワード",
+      "confirmPassword": "新しいパスワード確認",
+      "button": "パスワードをリセット"
+    }
+  },
+  "widget": {
+    "title": "お支払い",
+    "poweredBy": "Powered by Exora",
+    "processing": "処理中...",
+    "success": "お支払い完了！",
+    "error": "決済失敗。もう一度お試しください。"
+  }
+}

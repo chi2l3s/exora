@@ -1,0 +1,395 @@
+{
+  "metadata": {
+    "title": "Exora - 现代支付基础设施",
+    "description": "面向互联网企业的完整支付平台。接受付款、管理订阅并实现全球化扩展。"
+  },
+  "common": {
+    "getStarted": "开始使用",
+    "learnMore": "了解更多",
+    "viewDocs": "查看文档",
+    "signIn": "登录",
+    "signUp": "注册",
+    "signOut": "退出",
+    "dashboard": "控制台",
+    "settings": "设置",
+    "support": "支持",
+    "loading": "加载中...",
+    "error": "错误",
+    "success": "成功",
+    "cancel": "取消",
+    "save": "保存",
+    "delete": "删除",
+    "edit": "编辑",
+    "create": "创建",
+    "search": "搜索",
+    "filter": "筛选",
+    "export": "导出",
+    "import": "导入",
+    "back": "返回",
+    "next": "下一步",
+    "previous": "上一步",
+    "submit": "提交",
+    "confirm": "确认",
+    "close": "关闭",
+    "copy": "复制",
+    "copied": "已复制！",
+    "language": "语言",
+    "theme": "主题",
+    "lightMode": "浅色模式",
+    "darkMode": "深色模式",
+    "systemMode": "跟随系统"
+  },
+  "nav": {
+    "products": "产品",
+    "solutions": "解决方案",
+    "developers": "开发者",
+    "resources": "资源",
+    "pricing": "定价",
+    "docs": "文档",
+    "api": "API参考",
+    "blog": "博客",
+    "changelog": "更新日志"
+  },
+  "landing": {
+    "hero": {
+      "badge": "全球超过10,000家企业的信赖之选",
+      "title": "互联网支付基础设施",
+      "subtitle": "通过我们的统一API接受付款、全球汇款并自动化财务流程。",
+      "cta": {
+        "primary": "立即开始",
+        "secondary": "联系销售"
+      },
+      "stats": {
+        "transactions": "处理的交易",
+        "countries": "支持的国家",
+        "uptime": "可用性SLA",
+        "developers": "活跃开发者"
+      }
+    },
+    "features": {
+      "title": "接受付款所需的一切",
+      "subtitle": "使用我们全面的API和工具套件构建复杂的支付体验。",
+      "payments": {
+        "title": "全球支付",
+        "description": "在单一集成中接受135+种货币和数十种支付方式。"
+      },
+      "subscriptions": {
+        "title": "订阅",
+        "description": "通过灵活的计费逻辑和智能催收管理经常性收入。"
+      },
+      "invoicing": {
+        "title": "开票",
+        "description": "创建、发送和跟踪发票，并自动发送付款提醒。"
+      },
+      "connect": {
+        "title": "Connect",
+        "description": "通过多方支付构建平台和市场。"
+      },
+      "terminal": {
+        "title": "终端",
+        "description": "通过可定制的POS解决方案统一线上和线下支付。"
+      },
+      "security": {
+        "title": "安全与合规",
+        "description": "PCI DSS一级认证，内置欺诈保护。"
+      }
+    },
+    "integration": {
+      "title": "分钟级集成，而非数周",
+      "subtitle": "我们以开发者为中心的方法意味着您只需几行代码即可开始接受付款。",
+      "tabs": {
+        "node": "Node.js",
+        "python": "Python",
+        "ruby": "Ruby",
+        "go": "Go",
+        "php": "PHP"
+      }
+    },
+    "testimonials": {
+      "title": "深受开发者喜爱",
+      "subtitle": "了解我们的客户对使用Exora体验的评价。"
+    },
+    "pricing": {
+      "title": "简单透明的定价",
+      "subtitle": "按使用量付费。无隐藏费用，无意外。",
+      "perTransaction": "每笔成功交易",
+      "features": {
+        "cards": "所有主流信用卡",
+        "wallets": "数字钱包",
+        "support": "7x24小时支持",
+        "api": "完整API访问",
+        "webhooks": "实时Webhooks",
+        "analytics": "高级分析"
+      }
+    },
+    "cta": {
+      "title": "准备好开始了吗？",
+      "subtitle": "创建您的账户，几分钟内开始接受付款。",
+      "button": "创建免费账户"
+    },
+    "footer": {
+      "products": {
+        "title": "产品",
+        "payments": "支付",
+        "subscriptions": "订阅",
+        "invoicing": "开票",
+        "connect": "Connect",
+        "terminal": "终端"
+      },
+      "developers": {
+        "title": "开发者",
+        "documentation": "文档",
+        "apiReference": "API参考",
+        "sdks": "SDK与库",
+        "plugins": "插件",
+        "samples": "代码示例"
+      },
+      "company": {
+        "title": "公司",
+        "about": "关于我们",
+        "blog": "博客",
+        "careers": "招聘",
+        "press": "新闻",
+        "partners": "合作伙伴"
+      },
+      "legal": {
+        "title": "法律",
+        "privacy": "隐私政策",
+        "terms": "服务条款",
+        "cookies": "Cookie政策",
+        "compliance": "合规"
+      },
+      "copyright": "© {year} Exora, Inc. 保留所有权利。"
+    }
+  },
+  "dashboard": {
+    "title": "控制台",
+    "welcome": "欢迎回来，{name}",
+    "overview": {
+      "title": "概览",
+      "totalRevenue": "总收入",
+      "totalTransactions": "总交易",
+      "successRate": "成功率",
+      "activeCustomers": "活跃客户",
+      "comparedToLastMonth": "与上月相比"
+    },
+    "payments": {
+      "title": "支付",
+      "all": "所有支付",
+      "successful": "成功",
+      "pending": "待处理",
+      "failed": "失败",
+      "refunded": "已退款",
+      "create": "创建支付",
+      "amount": "金额",
+      "status": "状态",
+      "customer": "客户",
+      "date": "日期",
+      "method": "方式"
+    },
+    "customers": {
+      "title": "客户",
+      "all": "所有客户",
+      "active": "活跃",
+      "inactive": "不活跃",
+      "create": "添加客户",
+      "name": "姓名",
+      "email": "邮箱",
+      "joined": "注册日期",
+      "totalSpent": "消费总额"
+    },
+    "invoices": {
+      "title": "发票",
+      "all": "所有发票",
+      "draft": "草稿",
+      "sent": "已发送",
+      "paid": "已支付",
+      "overdue": "逾期",
+      "create": "创建发票",
+      "number": "发票号",
+      "customer": "客户",
+      "amount": "金额",
+      "dueDate": "到期日",
+      "status": "状态"
+    },
+    "apiKeys": {
+      "title": "API密钥",
+      "description": "管理不同环境的API密钥",
+      "publishable": "公开密钥",
+      "secret": "私密密钥",
+      "test": "测试模式",
+      "live": "生产模式",
+      "create": "创建新密钥",
+      "revoke": "撤销",
+      "lastUsed": "最后使用",
+      "warning": "请妥善保管您的私密密钥。请勿在公开仓库中分享。"
+    },
+    "webhooks": {
+      "title": "Webhooks",
+      "description": "配置接收实时事件的端点",
+      "create": "添加端点",
+      "url": "端点URL",
+      "events": "事件",
+      "status": "状态",
+      "active": "活跃",
+      "disabled": "已禁用"
+    },
+    "settings": {
+      "title": "设置",
+      "profile": "个人资料",
+      "team": "团队",
+      "billing": "账单",
+      "notifications": "通知",
+      "security": "安全",
+      "integrations": "集成",
+      "language": "语言与地区"
+    }
+  },
+  "payment": {
+    "title": "完成支付",
+    "amount": "应付金额",
+    "card": {
+      "title": "卡片信息",
+      "number": "卡号",
+      "expiry": "有效期",
+      "cvc": "CVC",
+      "name": "持卡人姓名"
+    },
+    "billing": {
+      "title": "账单地址",
+      "email": "邮箱",
+      "country": "国家",
+      "address": "地址",
+      "city": "城市",
+      "postalCode": "邮编"
+    },
+    "button": "支付 {amount}",
+    "processing": "正在处理支付...",
+    "success": {
+      "title": "支付成功",
+      "description": "感谢您的付款。确认邮件已发送至 {email}。",
+      "receipt": "查看收据"
+    },
+    "error": {
+      "title": "支付失败",
+      "description": "您的支付无法处理。请重试。",
+      "cardDeclined": "您的卡片被拒绝。",
+      "insufficientFunds": "余额不足。",
+      "invalidCard": "卡片信息无效。",
+      "expired": "此支付链接已过期。",
+      "tryAgain": "重试"
+    },
+    "secure": "您的支付受256位SSL加密保护"
+  },
+  "docs": {
+    "title": "文档",
+    "search": "搜索文档...",
+    "gettingStarted": {
+      "title": "入门",
+      "introduction": "介绍",
+      "quickstart": "快速开始",
+      "installation": "安装",
+      "authentication": "认证"
+    },
+    "guides": {
+      "title": "指南",
+      "acceptPayments": "接受付款",
+      "subscriptions": "管理订阅",
+      "invoicing": "发送发票",
+      "webhooks": "处理Webhooks",
+      "testing": "测试"
+    },
+    "api": {
+      "title": "API参考",
+      "overview": "概览",
+      "authentication": "认证",
+      "errors": "错误处理",
+      "pagination": "分页",
+      "versioning": "版本控制"
+    },
+    "sdks": {
+      "title": "SDK与库",
+      "nodejs": "Node.js",
+      "python": "Python",
+      "ruby": "Ruby",
+      "go": "Go",
+      "php": "PHP"
+    }
+  },
+  "errors": {
+    "notFound": {
+      "title": "页面未找到",
+      "description": "抱歉，我们无法找到您要访问的页面。",
+      "action": "返回首页"
+    },
+    "serverError": {
+      "title": "服务器错误",
+      "description": "我们这边出了点问题。请稍后重试。",
+      "action": "刷新"
+    },
+    "unauthorized": {
+      "title": "未授权",
+      "description": "您需要登录才能访问此页面。",
+      "action": "登录"
+    },
+    "forbidden": {
+      "title": "访问被拒绝",
+      "description": "您没有权限访问此资源。",
+      "action": "返回"
+    },
+    "validation": {
+      "required": "此字段为必填项",
+      "email": "请输入有效的邮箱地址",
+      "minLength": "至少需要 {min} 个字符",
+      "maxLength": "最多 {max} 个字符",
+      "pattern": "格式无效",
+      "passwordMatch": "密码不匹配"
+    }
+  },
+  "auth": {
+    "signIn": {
+      "title": "登录 Exora",
+      "subtitle": "欢迎回来！请输入您的凭据继续。",
+      "email": "邮箱地址",
+      "password": "密码",
+      "rememberMe": "记住我",
+      "forgotPassword": "忘记密码？",
+      "button": "登录",
+      "noAccount": "还没有账户？",
+      "signUp": "注册"
+    },
+    "signUp": {
+      "title": "创建账户",
+      "subtitle": "几分钟内开始接受付款。",
+      "name": "姓名",
+      "email": "邮箱地址",
+      "password": "密码",
+      "confirmPassword": "确认密码",
+      "terms": "我同意服务条款和隐私政策",
+      "button": "创建账户",
+      "hasAccount": "已有账户？",
+      "signIn": "登录"
+    },
+    "forgotPassword": {
+      "title": "重置密码",
+      "subtitle": "输入您的邮箱，我们将发送重置链接。",
+      "email": "邮箱地址",
+      "button": "发送重置链接",
+      "backToSignIn": "返回登录"
+    },
+    "resetPassword": {
+      "title": "设置新密码",
+      "subtitle": "在下方输入您的新密码。",
+      "password": "新密码",
+      "confirmPassword": "确认新密码",
+      "button": "重置密码"
+    }
+  },
+  "widget": {
+    "title": "支付",
+    "poweredBy": "由 Exora 提供支持",
+    "processing": "处理中...",
+    "success": "支付成功！",
+    "error": "支付失败。请重试。"
+  }
+}

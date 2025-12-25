@@ -1,0 +1,140 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model User {
+  id        String   @id @default(uuid())
+  email     String   @unique
+  password  String
+  name      String
+  locale    String   @default("en")
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  apiKeys          ApiKey[]
+  payments         Payment[]
+  invoices         Invoice[]
+  webhookEndpoints WebhookEndpoint[]
+  customers        Customer[]
+
+  @@map("users")
+}
+
+model ApiKey {
+  id         String    @id @default(uuid())
+  userId     String
+  user       User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  name       String
+  key        String    @unique
+  isLive     Boolean   @default(false)
+  isActive   Boolean   @default(true)
+  lastUsedAt DateTime?
+  createdAt  DateTime  @default(now())
+  updatedAt  DateTime  @updatedAt
+
+  @@index([userId])
+  @@index([key])
+  @@map("api_keys")
+}
+
+model Customer {
+  id        String   @id @default(uuid())
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  email     String
+  name      String?
+  phone     String?
+  metadata  Json     @default("{}")
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  payments Payment[]
+  invoices Invoice[]
+
+  @@index([userId])
+  @@index([email])
+  @@map("customers")
+}
+
+model Payment {
+  id             String   @id
+  userId         String
+  user           User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  customerId     String?
+  customer       Customer? @relation(fields: [customerId], references: [id])
+  amount         Int
+  currency       String
+  status         String   @default("pending")
+  description    String?
+  metadata       Json     @default("{}")
+  refundedAmount Int      @default(0)
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+
+  @@index([userId])
+  @@index([customerId])
+  @@index([status])
+  @@map("payments")
+}
+
+model Invoice {
+  id            String    @id
+  userId        String
+  user          User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  customerId    String?
+  customer      Customer? @relation(fields: [customerId], references: [id])
+  customerEmail String
+  number        String
+  amount        Int
+  currency      String
+  status        String    @default("draft")
+  dueDate       DateTime?
+  items         Json      @default("[]")
+  metadata      Json      @default("{}")
+  sentAt        DateTime?
+  paidAt        DateTime?
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+
+  @@unique([userId, number])
+  @@index([userId])
+  @@index([status])
+  @@map("invoices")
+}
+
+model WebhookEndpoint {
+  id        String   @id
+  userId    String
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  url       String
+  events    String[]
+  secret    String
+  isActive  Boolean  @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  deliveries WebhookDelivery[]
+
+  @@index([userId])
+  @@map("webhook_endpoints")
+}
+
+model WebhookDelivery {
+  id           String   @id
+  endpointId   String
+  endpoint     WebhookEndpoint @relation(fields: [endpointId], references: [id], onDelete: Cascade)
+  event        String
+  payload      Json
+  responseCode Int
+  success      Boolean
+  error        String?
+  createdAt    DateTime @default(now())
+
+  @@index([endpointId])
+  @@map("webhook_deliveries")
+}
