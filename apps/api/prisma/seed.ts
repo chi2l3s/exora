@@ -1,5 +1,6 @@
-import { PrismaClient, PaymentStatus, InvoiceStatus } from '@prisma/client';
+import { PrismaClient } from '@prisma/client';
 import * as bcrypt from 'bcryptjs';
+import { randomUUID } from 'crypto';
 
 const prisma = new PrismaClient();
 
@@ -36,23 +37,25 @@ async function main() {
   console.log('✅ Created demo user: demo@exora.dev / Demo@123456');
 
   // Create API keys
-  const liveApiKey = await prisma.apiKey.create({
+  await prisma.apiKey.create({
     data: {
       userId: demoUser.id,
       name: 'Live API Key',
       keyHash: await bcrypt.hash('sk_live_demo_key_123456789', 10),
       keyPrefix: 'sk_live_demo',
+      isLive: true,
       isActive: true,
       permissions: ['payments:read', 'payments:write', 'customers:read', 'customers:write', 'invoices:read', 'invoices:write'],
     },
   });
 
-  const testApiKey = await prisma.apiKey.create({
+  await prisma.apiKey.create({
     data: {
       userId: demoUser.id,
       name: 'Test API Key',
       keyHash: await bcrypt.hash('sk_test_demo_key_987654321', 10),
       keyPrefix: 'sk_test_demo',
+      isLive: false,
       isActive: true,
       permissions: ['payments:read', 'payments:write', 'customers:read', 'customers:write', 'invoices:read', 'invoices:write'],
     },
@@ -115,11 +118,14 @@ async function main() {
   console.log('✅ Created 5 customers');
 
   // Create payments
-  const paymentStatuses: PaymentStatus[] = ['succeeded', 'succeeded', 'succeeded', 'pending', 'failed', 'succeeded', 'succeeded', 'processing', 'succeeded', 'refunded'];
-  const currencies = ['USD', 'EUR', 'GBP'];
-  const methods = ['card', 'bank_transfer', 'wallet'];
+  type PaymentStatusType = 'pending' | 'processing' | 'succeeded' | 'failed' | 'canceled' | 'refunded';
+  type PaymentMethodType = 'card' | 'bank_transfer' | 'wallet';
 
-  const payments = await Promise.all(
+  const paymentStatuses: PaymentStatusType[] = ['succeeded', 'succeeded', 'succeeded', 'pending', 'failed', 'succeeded', 'succeeded', 'processing', 'succeeded', 'refunded'];
+  const currencies = ['USD', 'EUR', 'GBP'];
+  const methods: PaymentMethodType[] = ['card', 'bank_transfer', 'wallet'];
+
+  await Promise.all(
     Array.from({ length: 25 }, async (_, i) => {
       const customer = customers[i % customers.length];
       const status = paymentStatuses[i % paymentStatuses.length];
@@ -128,12 +134,13 @@ async function main() {
 
       return prisma.payment.create({
         data: {
+          id: `pay_${randomUUID().replace(/-/g, '').slice(0, 24)}`,
           userId: demoUser.id,
           customerId: customer.id,
-          amount: Math.floor(Math.random() * 500000) + 1000, // $10.00 to $5000.00 in cents
+          amount: Math.floor(Math.random() * 500000) + 1000,
           currency: currencies[i % currencies.length],
           status,
-          method: methods[i % methods.length] as any,
+          method: methods[i % methods.length],
           description: `Payment #${1000 + i}`,
           metadata: { orderId: `order_${1000 + i}` },
           paidAt: status === 'succeeded' ? createdAt : null,
@@ -148,9 +155,10 @@ async function main() {
   console.log('✅ Created 25 payments');
 
   // Create invoices
-  const invoiceStatuses: InvoiceStatus[] = ['paid', 'paid', 'open', 'draft', 'void'];
+  type InvoiceStatusType = 'draft' | 'open' | 'paid' | 'void';
+  const invoiceStatuses: InvoiceStatusType[] = ['paid', 'paid', 'open', 'draft', 'void'];
 
-  const invoices = await Promise.all(
+  await Promise.all(
     Array.from({ length: 10 }, async (_, i) => {
       const customer = customers[i % customers.length];
       const status = invoiceStatuses[i % invoiceStatuses.length];
@@ -221,14 +229,15 @@ async function main() {
     Array.from({ length: 5 }, async (_, i) => {
       const daysAgo = Math.floor(Math.random() * 7);
       const createdAt = new Date(Date.now() - daysAgo * 24 * 60 * 60 * 1000);
+      const eventTypes = ['payment.succeeded', 'payment.failed', 'invoice.paid'];
 
       return prisma.webhookDelivery.create({
         data: {
           endpointId: webhookEndpoint.id,
-          eventType: ['payment.succeeded', 'payment.failed', 'invoice.paid'][i % 3],
+          eventType: eventTypes[i % 3],
           payload: {
             id: `evt_${Date.now()}_${i}`,
-            type: ['payment.succeeded', 'payment.failed', 'invoice.paid'][i % 3],
+            type: eventTypes[i % 3],
             data: { object: { id: `pay_${i}`, amount: 10000 } },
           },
           responseStatus: i < 4 ? 200 : 500,
