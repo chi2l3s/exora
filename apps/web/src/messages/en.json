@@ -165,6 +165,11 @@
   "dashboard": {
     "title": "Dashboard",
     "welcome": "Welcome back, {name}",
+    "recentPayments": "Recent Payments",
+    "anonymousCustomer": "Anonymous Customer",
+    "noRecentPayments": "No recent payments",
+    "revenueChart": "Revenue Overview",
+    "chartComingSoon": "Chart visualization coming soon",
     "overview": {
       "title": "Overview",
       "totalRevenue": "Total Revenue",
@@ -347,41 +352,65 @@
     }
   },
   "auth": {
-    "signIn": {
+    "login": {
       "title": "Sign in to Exora",
       "subtitle": "Welcome back! Enter your credentials to continue.",
-      "email": "Email address",
-      "password": "Password",
-      "rememberMe": "Remember me",
       "forgotPassword": "Forgot password?",
-      "button": "Sign In",
+      "submit": "Sign In",
       "noAccount": "Don't have an account?",
       "signUp": "Sign up"
     },
-    "signUp": {
+    "register": {
       "title": "Create your account",
       "subtitle": "Start accepting payments in minutes.",
-      "name": "Full name",
-      "email": "Email address",
-      "password": "Password",
-      "confirmPassword": "Confirm password",
-      "terms": "I agree to the Terms of Service and Privacy Policy",
-      "button": "Create Account",
+      "submit": "Create Account",
       "hasAccount": "Already have an account?",
       "signIn": "Sign in"
+    },
+    "error": {
+      "title": "Authentication Error",
+      "subtitle": "There was a problem signing you in.",
+      "tryAgain": "Try Again",
+      "backHome": "Back to Home"
+    },
+    "fields": {
+      "email": "Email",
+      "password": "Password",
+      "confirmPassword": "Confirm Password",
+      "firstName": "First Name",
+      "lastName": "Last Name",
+      "companyName": "Company Name"
+    },
+    "placeholders": {
+      "firstName": "John",
+      "lastName": "Doe",
+      "companyName": "Acme Inc."
+    },
+    "password": {
+      "minLength": "At least 8 characters",
+      "hasUppercase": "One uppercase letter",
+      "hasLowercase": "One lowercase letter",
+      "hasNumber": "One number"
+    },
+    "errors": {
+      "unexpected": "An unexpected error occurred. Please try again.",
+      "invalidCredentials": "Invalid email or password.",
+      "passwordRequirements": "Password does not meet requirements.",
+      "passwordMismatch": "Passwords do not match.",
+      "configuration": "There is a problem with the server configuration.",
+      "accessDenied": "Access denied. You do not have permission.",
+      "verification": "The verification link is invalid or has expired.",
+      "default": "An error occurred during authentication."
     },
     "forgotPassword": {
       "title": "Reset your password",
       "subtitle": "Enter your email and we'll send you a reset link.",
-      "email": "Email address",
       "button": "Send Reset Link",
       "backToSignIn": "Back to sign in"
     },
     "resetPassword": {
       "title": "Set new password",
       "subtitle": "Enter your new password below.",
-      "password": "New password",
-      "confirmPassword": "Confirm new password",
       "button": "Reset Password"
     }
   },

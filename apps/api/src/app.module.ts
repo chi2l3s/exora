@@ -10,7 +10,9 @@ import { ApiKeysModule } from './modules/api-keys/api-keys.module';
 import { PaymentsModule } from './modules/payments/payments.module';
 import { InvoicesModule } from './modules/invoices/invoices.module';
 import { WebhooksModule } from './modules/webhooks/webhooks.module';
-import { PrismaModule } from './modules/prisma/prisma.module';
+import { CustomersModule } from './modules/customers/customers.module';
+import { DashboardModule } from './modules/dashboard/dashboard.module';
+import { PrismaModule } from './prisma/prisma.module';
 import { HealthModule } from './modules/health/health.module';
 
 @Module({
@@ -56,6 +58,8 @@ import { HealthModule } from './modules/health/health.module';
     PaymentsModule,
     InvoicesModule,
     WebhooksModule,
+    CustomersModule,
+    DashboardModule,
   ],
 })
 export class AppModule {}

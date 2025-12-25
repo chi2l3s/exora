@@ -17,6 +17,8 @@ A production-ready payment platform built with modern technologies, featuring mu
 ### Frontend (apps/web)
 - Next.js 14 with App Router
 - next-intl for internationalization
+- NextAuth.js for authentication
+- TanStack Query for data fetching
 - Tailwind CSS with custom glassmorphism effects
 - Framer Motion for animations
 - Radix UI components
@@ -25,6 +27,7 @@ A production-ready payment platform built with modern technologies, featuring mu
 - NestJS 10
 - Prisma ORM
 - PostgreSQL
+- Redis for caching
 - nestjs-i18n for backend localization
 - JWT authentication
 
@@ -49,19 +52,20 @@ exora/
 ├── packages/
 │   ├── exora-sdk/    # Official SDK
 │   └── ui/           # UI component library
-├── turbo.json        # Turborepo config
+├── docker-compose.yml
+├── turbo.json
 └── pnpm-workspace.yaml
 ```
 
-## Quick Start
+## Quick Start (Local Development)
 
 ### Prerequisites
 
 - Node.js 18+
 - pnpm 8+
-- PostgreSQL
+- Docker & Docker Compose
 
-### Installation
+### 1. Clone and Install
 
 ```bash
 # Clone the repository
@@ -70,22 +74,126 @@ cd exora
 
 # Install dependencies
 pnpm install
+```
 
-# Set up environment variables
-cp apps/api/.env.example apps/api/.env
+### 2. Start Infrastructure
 
-# Run database migrations
-pnpm --filter @exora/api prisma migrate dev
+```bash
+# Start PostgreSQL, Redis, and MailHog
+docker-compose up -d
 
-# Start development servers
+# Verify services are running
+docker-compose ps
+```
+
+Services started:
+- **PostgreSQL**: localhost:5432 (user: exora, password: exora_secret_2024)
+- **Redis**: localhost:6379 (password: exora_redis_2024)
+- **MailHog**: http://localhost:8025 (email testing UI)
+
+### 3. Setup Database
+
+```bash
+# Generate Prisma client
+pnpm --filter @exora/api db:generate
+
+# Run migrations
+pnpm --filter @exora/api db:migrate
+
+# Seed with demo data
+pnpm --filter @exora/api db:seed
+```
+
+### 4. Start Development Servers
+
+```bash
+# Start both frontend and backend
 pnpm dev
 ```
 
 ### Access Points
 
-- **Web App**: http://localhost:3000
-- **API**: http://localhost:4000
-- **API Docs**: http://localhost:4000/api/docs
+| Service | URL | Description |
+|---------|-----|-------------|
+| Web App | http://localhost:3000 | Next.js frontend |
+| API | http://localhost:4000 | NestJS backend |
+| API Docs | http://localhost:4000/api/docs | Swagger documentation |
+| MailHog | http://localhost:8025 | Email testing UI |
+| Prisma Studio | Run `pnpm --filter @exora/api db:studio` | Database browser |
+
+### Demo Credentials
+
+After running the seed command:
+
+```
+Email: demo@exora.dev
+Password: Demo@123456
+```
+
+## Development Commands
+
+```bash
+# Start all apps in development
+pnpm dev
+
+# Start specific app
+pnpm --filter @exora/web dev
+pnpm --filter @exora/api dev
+
+# Build all packages
+pnpm build
+
+# Run tests
+pnpm test
+
+# Type check
+pnpm typecheck
+
+# Lint
+pnpm lint
+
+# Database commands (run from root or apps/api)
+pnpm --filter @exora/api db:generate  # Generate Prisma client
+pnpm --filter @exora/api db:migrate   # Run migrations
+pnpm --filter @exora/api db:seed      # Seed demo data
+pnpm --filter @exora/api db:studio    # Open Prisma Studio
+```
+
+## Environment Variables
+
+### Backend (apps/api/.env)
+
+```env
+# Server
+PORT=4000
+NODE_ENV=development
+API_URL=http://localhost:4000
+
+# Database (Docker)
+DATABASE_URL="postgresql://exora:exora_secret_2024@localhost:5432/exora?schema=public"
+
+# Redis (Docker)
+REDIS_URL="redis://:exora_redis_2024@localhost:6379"
+
+# JWT
+JWT_SECRET=your-super-secret-jwt-key-change-in-production-min-32-chars
+JWT_EXPIRES_IN=7d
+
+# CORS
+CORS_ORIGINS=http://localhost:3000
+```
+
+### Frontend (apps/web/.env.local)
+
+```env
+# API Configuration
+NEXT_PUBLIC_API_URL=http://localhost:4000
+NEXT_PUBLIC_APP_URL=http://localhost:3000
+
+# NextAuth
+NEXTAUTH_URL=http://localhost:3000
+NEXTAUTH_SECRET=your-nextauth-secret-key
+```
 
 ## SDK Usage
 
@@ -145,61 +253,94 @@ The platform supports 10 languages:
 | ja | 日本語 | 🇯🇵 |
 | ko | 한국어 | 🇰🇷 |
 
-### Frontend i18n
+### URL-based Locales
 
-Uses next-intl with URL-based locales:
-- `/en` - English
-- `/ru` - Russian
-- `/fr` - French
-
-### Backend i18n
-
-Uses nestjs-i18n with Accept-Language header detection.
+- `/en/dashboard` - English
+- `/ru/dashboard` - Russian
+- `/fr/dashboard` - French
 
 ## API Endpoints
 
 ### Authentication
-- `POST /api/v1/auth/signup` - Create account
-- `POST /api/v1/auth/signin` - Sign in
-- `POST /api/v1/auth/refresh` - Refresh token
+- `POST /auth/login` - Sign in
+- `POST /auth/register` - Create account
+- `POST /auth/refresh` - Refresh token
+- `GET /auth/me` - Get current user
+
+### Dashboard
+- `GET /dashboard/overview` - Dashboard overview with stats
+- `GET /dashboard/stats` - Statistics
+- `GET /dashboard/recent-payments` - Recent payments
 
 ### Payments
-- `POST /api/v1/payments` - Create payment
-- `GET /api/v1/payments` - List payments
-- `GET /api/v1/payments/:id` - Get payment
-- `POST /api/v1/payments/:id/confirm` - Confirm payment
-- `POST /api/v1/payments/:id/refund` - Refund payment
+- `POST /payments` - Create payment
+- `GET /payments` - List payments
+- `GET /payments/:id` - Get payment
+- `POST /payments/:id/capture` - Capture payment
+- `POST /payments/:id/refund` - Refund payment
+
+### Customers
+- `POST /customers` - Create customer
+- `GET /customers` - List customers
+- `GET /customers/:id` - Get customer
+- `GET /customers/:id/payments` - Customer payments
 
 ### Invoices
-- `POST /api/v1/invoices` - Create invoice
-- `GET /api/v1/invoices` - List invoices
-- `POST /api/v1/invoices/:id/send` - Send invoice
+- `POST /invoices` - Create invoice
+- `GET /invoices` - List invoices
+- `POST /invoices/:id/finalize` - Finalize invoice
+- `POST /invoices/:id/pay` - Mark as paid
 
 ### Webhooks
-- `POST /api/v1/webhooks` - Create endpoint
-- `GET /api/v1/webhooks` - List endpoints
+- `POST /webhooks` - Create endpoint
+- `GET /webhooks` - List endpoints
+- `POST /webhooks/:id/test` - Test webhook
 
-## Development
+### API Keys
+- `POST /api-keys` - Create API key
+- `GET /api-keys` - List API keys
+- `POST /api-keys/:id/revoke` - Revoke key
+
+## Troubleshooting
+
+### Database Connection Issues
 
 ```bash
-# Run all apps in development
-pnpm dev
+# Check if PostgreSQL is running
+docker-compose ps
 
-# Run specific app
-pnpm web dev
-pnpm api dev
+# View logs
+docker-compose logs postgres
 
-# Build all packages
-pnpm build
+# Restart containers
+docker-compose restart
+```
 
-# Run tests
-pnpm test
+### Port Conflicts
 
-# Type check
-pnpm typecheck
+If ports are already in use:
 
-# Lint
-pnpm lint
+```bash
+# Check what's using port 5432
+lsof -i :5432
+
+# Stop conflicting services or change ports in docker-compose.yml
+```
+
+### Clean Start
+
+```bash
+# Stop and remove all containers and volumes
+docker-compose down -v
+
+# Remove node_modules
+rm -rf node_modules apps/*/node_modules packages/*/node_modules
+
+# Fresh install
+pnpm install
+docker-compose up -d
+pnpm --filter @exora/api db:migrate
+pnpm --filter @exora/api db:seed
 ```
 
 ## License
