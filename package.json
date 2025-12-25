@@ -1,0 +1,32 @@
+{
+  "name": "exora",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Production-ready payment platform with multi-language support",
+  "author": "Exora Team",
+  "license": "MIT",
+  "scripts": {
+    "dev": "turbo run dev",
+    "build": "turbo run build",
+    "lint": "turbo run lint",
+    "test": "turbo run test",
+    "typecheck": "turbo run typecheck",
+    "clean": "turbo run clean && rm -rf node_modules",
+    "format": "prettier --write \"**/*.{ts,tsx,js,jsx,json,md}\"",
+    "web": "pnpm --filter @exora/web",
+    "api": "pnpm --filter @exora/api",
+    "sdk": "pnpm --filter exora-sdk",
+    "ui": "pnpm --filter @exora/ui"
+  },
+  "devDependencies": {
+    "@types/node": "^20.10.0",
+    "prettier": "^3.1.0",
+    "turbo": "^2.0.0",
+    "typescript": "^5.3.0"
+  },
+  "packageManager": "pnpm@8.15.0",
+  "engines": {
+    "node": ">=18.0.0",
+    "pnpm": ">=8.0.0"
+  }
+}

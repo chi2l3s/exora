@@ -1,0 +1,395 @@
+{
+  "metadata": {
+    "title": "Exora - 현대적인 결제 인프라",
+    "description": "인터넷 비즈니스를 위한 완벽한 결제 플랫폼. 결제를 받고, 구독을 관리하고, 글로벌하게 확장하세요."
+  },
+  "common": {
+    "getStarted": "시작하기",
+    "learnMore": "더 알아보기",
+    "viewDocs": "문서 보기",
+    "signIn": "로그인",
+    "signUp": "가입하기",
+    "signOut": "로그아웃",
+    "dashboard": "대시보드",
+    "settings": "설정",
+    "support": "지원",
+    "loading": "로딩 중...",
+    "error": "오류",
+    "success": "성공",
+    "cancel": "취소",
+    "save": "저장",
+    "delete": "삭제",
+    "edit": "편집",
+    "create": "생성",
+    "search": "검색",
+    "filter": "필터",
+    "export": "내보내기",
+    "import": "가져오기",
+    "back": "뒤로",
+    "next": "다음",
+    "previous": "이전",
+    "submit": "제출",
+    "confirm": "확인",
+    "close": "닫기",
+    "copy": "복사",
+    "copied": "복사됨!",
+    "language": "언어",
+    "theme": "테마",
+    "lightMode": "라이트 모드",
+    "darkMode": "다크 모드",
+    "systemMode": "시스템"
+  },
+  "nav": {
+    "products": "제품",
+    "solutions": "솔루션",
+    "developers": "개발자",
+    "resources": "리소스",
+    "pricing": "가격",
+    "docs": "문서",
+    "api": "API 레퍼런스",
+    "blog": "블로그",
+    "changelog": "변경 로그"
+  },
+  "landing": {
+    "hero": {
+      "badge": "전 세계 10,000개 이상의 기업이 신뢰합니다",
+      "title": "인터넷을 위한 결제 인프라",
+      "subtitle": "통합 API로 결제를 받고, 전 세계에 송금하고, 금융 프로세스를 자동화하세요.",
+      "cta": {
+        "primary": "지금 시작하기",
+        "secondary": "영업팀 연락"
+      },
+      "stats": {
+        "transactions": "처리된 거래",
+        "countries": "지원 국가",
+        "uptime": "가용성 SLA",
+        "developers": "활성 개발자"
+      }
+    },
+    "features": {
+      "title": "결제에 필요한 모든 것",
+      "subtitle": "포괄적인 API와 도구 제품군으로 정교한 결제 경험을 구축하세요.",
+      "payments": {
+        "title": "글로벌 결제",
+        "description": "단일 통합으로 135개 이상의 통화와 수십 가지 결제 방법을 수용합니다."
+      },
+      "subscriptions": {
+        "title": "구독",
+        "description": "유연한 청구 로직과 스마트 독촉으로 반복 수익을 관리합니다."
+      },
+      "invoicing": {
+        "title": "청구",
+        "description": "자동 결제 알림으로 청구서를 생성, 발송 및 추적합니다."
+      },
+      "connect": {
+        "title": "Connect",
+        "description": "다자간 결제로 플랫폼과 마켓플레이스를 구축합니다."
+      },
+      "terminal": {
+        "title": "터미널",
+        "description": "맞춤형 POS 솔루션으로 온라인과 대면 결제를 통합합니다."
+      },
+      "security": {
+        "title": "보안 및 규정 준수",
+        "description": "사기 방지 기능이 내장된 PCI DSS 레벨 1 인증."
+      }
+    },
+    "integration": {
+      "title": "몇 주가 아닌 몇 분 만에 통합",
+      "subtitle": "개발자 우선 접근 방식으로 몇 줄의 코드만으로 결제를 받기 시작할 수 있습니다.",
+      "tabs": {
+        "node": "Node.js",
+        "python": "Python",
+        "ruby": "Ruby",
+        "go": "Go",
+        "php": "PHP"
+      }
+    },
+    "testimonials": {
+      "title": "개발자들의 사랑",
+      "subtitle": "고객들이 Exora 경험에 대해 어떻게 말하는지 확인하세요."
+    },
+    "pricing": {
+      "title": "간단하고 투명한 가격",
+      "subtitle": "사용한 만큼만 지불하세요. 숨겨진 수수료 없음, 놀라운 일 없음.",
+      "perTransaction": "성공적인 거래당",
+      "features": {
+        "cards": "모든 주요 신용카드",
+        "wallets": "디지털 지갑",
+        "support": "24/7 지원",
+        "api": "전체 API 액세스",
+        "webhooks": "실시간 웹훅",
+        "analytics": "고급 분석"
+      }
+    },
+    "cta": {
+      "title": "시작할 준비가 되셨나요?",
+      "subtitle": "계정을 만들고 몇 분 안에 결제를 받기 시작하세요.",
+      "button": "무료 계정 만들기"
+    },
+    "footer": {
+      "products": {
+        "title": "제품",
+        "payments": "결제",
+        "subscriptions": "구독",
+        "invoicing": "청구",
+        "connect": "Connect",
+        "terminal": "터미널"
+      },
+      "developers": {
+        "title": "개발자",
+        "documentation": "문서",
+        "apiReference": "API 레퍼런스",
+        "sdks": "SDK 및 라이브러리",
+        "plugins": "플러그인",
+        "samples": "코드 샘플"
+      },
+      "company": {
+        "title": "회사",
+        "about": "소개",
+        "blog": "블로그",
+        "careers": "채용",
+        "press": "보도 자료",
+        "partners": "파트너"
+      },
+      "legal": {
+        "title": "법적 고지",
+        "privacy": "개인정보 처리방침",
+        "terms": "이용약관",
+        "cookies": "쿠키 정책",
+        "compliance": "규정 준수"
+      },
+      "copyright": "© {year} Exora, Inc. All rights reserved."
+    }
+  },
+  "dashboard": {
+    "title": "대시보드",
+    "welcome": "다시 오신 것을 환영합니다, {name}님",
+    "overview": {
+      "title": "개요",
+      "totalRevenue": "총 수익",
+      "totalTransactions": "총 거래",
+      "successRate": "성공률",
+      "activeCustomers": "활성 고객",
+      "comparedToLastMonth": "지난 달 대비"
+    },
+    "payments": {
+      "title": "결제",
+      "all": "모든 결제",
+      "successful": "성공",
+      "pending": "대기 중",
+      "failed": "실패",
+      "refunded": "환불됨",
+      "create": "결제 생성",
+      "amount": "금액",
+      "status": "상태",
+      "customer": "고객",
+      "date": "날짜",
+      "method": "방법"
+    },
+    "customers": {
+      "title": "고객",
+      "all": "모든 고객",
+      "active": "활성",
+      "inactive": "비활성",
+      "create": "고객 추가",
+      "name": "이름",
+      "email": "이메일",
+      "joined": "가입일",
+      "totalSpent": "총 지출"
+    },
+    "invoices": {
+      "title": "청구서",
+      "all": "모든 청구서",
+      "draft": "초안",
+      "sent": "발송됨",
+      "paid": "지불됨",
+      "overdue": "연체",
+      "create": "청구서 생성",
+      "number": "청구서 #",
+      "customer": "고객",
+      "amount": "금액",
+      "dueDate": "만기일",
+      "status": "상태"
+    },
+    "apiKeys": {
+      "title": "API 키",
+      "description": "다른 환경에 대한 API 키 관리",
+      "publishable": "공개 키",
+      "secret": "비밀 키",
+      "test": "테스트 모드",
+      "live": "라이브 모드",
+      "create": "새 키 생성",
+      "revoke": "취소",
+      "lastUsed": "마지막 사용",
+      "warning": "비밀 키를 안전하게 보관하세요. 공개 저장소에 공유하지 마세요."
+    },
+    "webhooks": {
+      "title": "웹훅",
+      "description": "실시간 이벤트를 수신할 엔드포인트 구성",
+      "create": "엔드포인트 추가",
+      "url": "엔드포인트 URL",
+      "events": "이벤트",
+      "status": "상태",
+      "active": "활성",
+      "disabled": "비활성"
+    },
+    "settings": {
+      "title": "설정",
+      "profile": "프로필",
+      "team": "팀",
+      "billing": "청구",
+      "notifications": "알림",
+      "security": "보안",
+      "integrations": "통합",
+      "language": "언어 및 지역"
+    }
+  },
+  "payment": {
+    "title": "결제 완료",
+    "amount": "결제 금액",
+    "card": {
+      "title": "카드 정보",
+      "number": "카드 번호",
+      "expiry": "만료일",
+      "cvc": "CVC",
+      "name": "카드 소유자 이름"
+    },
+    "billing": {
+      "title": "청구 주소",
+      "email": "이메일",
+      "country": "국가",
+      "address": "주소",
+      "city": "도시",
+      "postalCode": "우편번호"
+    },
+    "button": "{amount} 결제",
+    "processing": "결제 처리 중...",
+    "success": {
+      "title": "결제 성공",
+      "description": "결제해 주셔서 감사합니다. 확인 이메일이 {email}(으)로 발송되었습니다.",
+      "receipt": "영수증 보기"
+    },
+    "error": {
+      "title": "결제 실패",
+      "description": "결제를 처리할 수 없습니다. 다시 시도해 주세요.",
+      "cardDeclined": "카드가 거부되었습니다.",
+      "insufficientFunds": "잔액이 부족합니다.",
+      "invalidCard": "카드 정보가 유효하지 않습니다.",
+      "expired": "이 결제 링크가 만료되었습니다.",
+      "tryAgain": "다시 시도"
+    },
+    "secure": "256비트 SSL 암호화로 결제가 보호됩니다"
+  },
+  "docs": {
+    "title": "문서",
+    "search": "문서 검색...",
+    "gettingStarted": {
+      "title": "시작하기",
+      "introduction": "소개",
+      "quickstart": "빠른 시작 가이드",
+      "installation": "설치",
+      "authentication": "인증"
+    },
+    "guides": {
+      "title": "가이드",
+      "acceptPayments": "결제 받기",
+      "subscriptions": "구독 관리",
+      "invoicing": "청구서 보내기",
+      "webhooks": "웹훅 처리",
+      "testing": "테스트"
+    },
+    "api": {
+      "title": "API 레퍼런스",
+      "overview": "개요",
+      "authentication": "인증",
+      "errors": "오류 처리",
+      "pagination": "페이지네이션",
+      "versioning": "버전 관리"
+    },
+    "sdks": {
+      "title": "SDK 및 라이브러리",
+      "nodejs": "Node.js",
+      "python": "Python",
+      "ruby": "Ruby",
+      "go": "Go",
+      "php": "PHP"
+    }
+  },
+  "errors": {
+    "notFound": {
+      "title": "페이지를 찾을 수 없음",
+      "description": "죄송합니다. 찾고 있는 페이지를 찾을 수 없습니다.",
+      "action": "홈으로 이동"
+    },
+    "serverError": {
+      "title": "서버 오류",
+      "description": "문제가 발생했습니다. 나중에 다시 시도해 주세요.",
+      "action": "새로고침"
+    },
+    "unauthorized": {
+      "title": "인증 필요",
+      "description": "이 페이지에 접근하려면 로그인해야 합니다.",
+      "action": "로그인"
+    },
+    "forbidden": {
+      "title": "접근 거부",
+      "description": "이 리소스에 접근할 권한이 없습니다.",
+      "action": "뒤로"
+    },
+    "validation": {
+      "required": "이 필드는 필수입니다",
+      "email": "유효한 이메일 주소를 입력하세요",
+      "minLength": "최소 {min}자 이상이어야 합니다",
+      "maxLength": "최대 {max}자까지 가능합니다",
+      "pattern": "형식이 올바르지 않습니다",
+      "passwordMatch": "비밀번호가 일치하지 않습니다"
+    }
+  },
+  "auth": {
+    "signIn": {
+      "title": "Exora 로그인",
+      "subtitle": "다시 오신 것을 환영합니다! 자격 증명을 입력하여 계속하세요.",
+      "email": "이메일 주소",
+      "password": "비밀번호",
+      "rememberMe": "로그인 유지",
+      "forgotPassword": "비밀번호를 잊으셨나요?",
+      "button": "로그인",
+      "noAccount": "계정이 없으신가요?",
+      "signUp": "가입하기"
+    },
+    "signUp": {
+      "title": "계정 만들기",
+      "subtitle": "몇 분 안에 결제를 받기 시작하세요.",
+      "name": "이름",
+      "email": "이메일 주소",
+      "password": "비밀번호",
+      "confirmPassword": "비밀번호 확인",
+      "terms": "이용약관 및 개인정보 처리방침에 동의합니다",
+      "button": "계정 만들기",
+      "hasAccount": "이미 계정이 있으신가요?",
+      "signIn": "로그인"
+    },
+    "forgotPassword": {
+      "title": "비밀번호 재설정",
+      "subtitle": "이메일을 입력하시면 재설정 링크를 보내드립니다.",
+      "email": "이메일 주소",
+      "button": "재설정 링크 보내기",
+      "backToSignIn": "로그인으로 돌아가기"
+    },
+    "resetPassword": {
+      "title": "새 비밀번호 설정",
+      "subtitle": "아래에 새 비밀번호를 입력하세요.",
+      "password": "새 비밀번호",
+      "confirmPassword": "새 비밀번호 확인",
+      "button": "비밀번호 재설정"
+    }
+  },
+  "widget": {
+    "title": "결제",
+    "poweredBy": "Powered by Exora",
+    "processing": "처리 중...",
+    "success": "결제 성공!",
+    "error": "결제 실패. 다시 시도해 주세요."
+  }
+}
