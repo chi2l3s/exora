@@ -7,14 +7,55 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+enum UserRole {
+  user
+  admin
+}
+
+enum PaymentStatus {
+  pending
+  processing
+  succeeded
+  failed
+  canceled
+  refunded
+  partially_refunded
+}
+
+enum PaymentMethod {
+  card
+  bank_transfer
+  crypto
+  wallet
+}
+
+enum InvoiceStatus {
+  draft
+  open
+  paid
+  void
+  uncollectible
+}
+
+enum WebhookDeliveryStatus {
+  pending
+  success
+  failed
+}
+
 model User {
-  id        String   @id @default(uuid())
-  email     String   @unique
-  password  String
-  name      String
-  locale    String   @default("en")
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  id          String   @id @default(uuid())
+  email       String   @unique
+  password    String
+  firstName   String?
+  lastName    String?
+  companyName String?
+  avatarUrl   String?
+  role        UserRole @default(user)
+  isVerified  Boolean  @default(false)
+  locale      String   @default("en")
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
 
   apiKeys          ApiKey[]
   payments         Payment[]
@@ -26,80 +67,93 @@ model User {
 }
 
 model ApiKey {
-  id         String    @id @default(uuid())
-  userId     String
-  user       User      @relation(fields: [userId], references: [id], onDelete: Cascade)
-  name       String
-  key        String    @unique
-  isLive     Boolean   @default(false)
-  isActive   Boolean   @default(true)
-  lastUsedAt DateTime?
-  createdAt  DateTime  @default(now())
-  updatedAt  DateTime  @updatedAt
+  id          String    @id @default(uuid())
+  userId      String
+  user        User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  name        String
+  keyHash     String
+  keyPrefix   String
+  isLive      Boolean   @default(false)
+  isActive    Boolean   @default(true)
+  permissions String[]  @default([])
+  expiresAt   DateTime?
+  lastUsedAt  DateTime?
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
 
   @@index([userId])
-  @@index([key])
+  @@index([keyPrefix])
   @@map("api_keys")
 }
 
 model Customer {
-  id        String   @id @default(uuid())
-  userId    String
-  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-  email     String
-  name      String?
-  phone     String?
-  metadata  Json     @default("{}")
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  id         String   @id @default(uuid())
+  userId     String
+  user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  email      String
+  name       String?
+  phone      String?
+  externalId String?
+  metadata   Json     @default("{}")
+  createdAt  DateTime @default(now())
+  updatedAt  DateTime @updatedAt
 
   payments Payment[]
   invoices Invoice[]
 
   @@index([userId])
   @@index([email])
+  @@index([externalId])
   @@map("customers")
 }
 
 model Payment {
-  id             String   @id
+  id             String         @id
   userId         String
-  user           User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  user           User           @relation(fields: [userId], references: [id], onDelete: Cascade)
   customerId     String?
-  customer       Customer? @relation(fields: [customerId], references: [id])
+  customer       Customer?      @relation(fields: [customerId], references: [id])
   amount         Int
   currency       String
-  status         String   @default("pending")
+  status         PaymentStatus  @default(pending)
+  method         PaymentMethod?
   description    String?
-  metadata       Json     @default("{}")
-  refundedAmount Int      @default(0)
-  createdAt      DateTime @default(now())
-  updatedAt      DateTime @updatedAt
+  metadata       Json           @default("{}")
+  failureCode    String?
+  failureMessage String?
+  refundedAmount Int            @default(0)
+  paidAt         DateTime?
+  createdAt      DateTime       @default(now())
+  updatedAt      DateTime       @updatedAt
 
   @@index([userId])
   @@index([customerId])
   @@index([status])
+  @@index([createdAt])
   @@map("payments")
 }
 
 model Invoice {
-  id            String    @id
-  userId        String
-  user          User      @relation(fields: [userId], references: [id], onDelete: Cascade)
-  customerId    String?
-  customer      Customer? @relation(fields: [customerId], references: [id])
-  customerEmail String
-  number        String
-  amount        Int
-  currency      String
-  status        String    @default("draft")
-  dueDate       DateTime?
-  items         Json      @default("[]")
-  metadata      Json      @default("{}")
-  sentAt        DateTime?
-  paidAt        DateTime?
-  createdAt     DateTime  @default(now())
-  updatedAt     DateTime  @updatedAt
+  id         String        @id @default(uuid())
+  userId     String
+  user       User          @relation(fields: [userId], references: [id], onDelete: Cascade)
+  customerId String?
+  customer   Customer?     @relation(fields: [customerId], references: [id])
+  number     String
+  status     InvoiceStatus @default(draft)
+  currency   String        @default("USD")
+  subtotal   Int           @default(0)
+  tax        Int           @default(0)
+  total      Int           @default(0)
+  amountPaid Int           @default(0)
+  amountDue  Int           @default(0)
+  dueDate    DateTime?
+  paidAt     DateTime?
+  metadata   Json          @default("{}")
+  createdAt  DateTime      @default(now())
+  updatedAt  DateTime      @updatedAt
+
+  items InvoiceItem[]
 
   @@unique([userId, number])
   @@index([userId])
@@ -107,16 +161,32 @@ model Invoice {
   @@map("invoices")
 }
 
+model InvoiceItem {
+  id          String  @id @default(uuid())
+  invoiceId   String
+  invoice     Invoice @relation(fields: [invoiceId], references: [id], onDelete: Cascade)
+  description String
+  quantity    Int     @default(1)
+  unitPrice   Int
+  amount      Int
+
+  @@index([invoiceId])
+  @@map("invoice_items")
+}
+
 model WebhookEndpoint {
-  id        String   @id
-  userId    String
-  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-  url       String
-  events    String[]
-  secret    String
-  isActive  Boolean  @default(true)
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  id                 String    @id @default(uuid())
+  userId             String
+  user               User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  url                String
+  events             String[]
+  secret             String
+  description        String?
+  isActive           Boolean   @default(true)
+  lastDeliveryAt     DateTime?
+  lastDeliveryStatus WebhookDeliveryStatus?
+  createdAt          DateTime  @default(now())
+  updatedAt          DateTime  @updatedAt
 
   deliveries WebhookDelivery[]
 
@@ -125,16 +195,19 @@ model WebhookEndpoint {
 }
 
 model WebhookDelivery {
-  id           String   @id
-  endpointId   String
-  endpoint     WebhookEndpoint @relation(fields: [endpointId], references: [id], onDelete: Cascade)
-  event        String
-  payload      Json
-  responseCode Int
-  success      Boolean
-  error        String?
-  createdAt    DateTime @default(now())
+  id             String                @id @default(uuid())
+  endpointId     String
+  endpoint       WebhookEndpoint       @relation(fields: [endpointId], references: [id], onDelete: Cascade)
+  eventType      String
+  payload        Json
+  responseStatus Int?
+  responseBody   String?
+  attempts       Int                   @default(1)
+  status         WebhookDeliveryStatus @default(pending)
+  nextRetryAt    DateTime?
+  createdAt      DateTime              @default(now())
 
   @@index([endpointId])
+  @@index([status])
   @@map("webhook_deliveries")
 }
