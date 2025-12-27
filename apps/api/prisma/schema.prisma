@@ -7,141 +7,472 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+// ============================================================================
+// ENUMS
+// ============================================================================
+
 enum UserRole {
   user
   admin
 }
 
+enum MerchantStatus {
+  PENDING
+  ACTIVE
+  SUSPENDED
+  BLOCKED
+}
+
+enum VerificationStatus {
+  NOT_VERIFIED
+  PENDING
+  VERIFIED
+  REJECTED
+}
+
 enum PaymentStatus {
-  pending
-  processing
-  succeeded
-  failed
-  canceled
-  refunded
-  partially_refunded
+  PENDING
+  PROCESSING
+  REQUIRES_ACTION
+  SUCCEEDED
+  FAILED
+  CANCELLED
+  REFUNDED
+  PARTIALLY_REFUNDED
+  EXPIRED
 }
 
 enum PaymentMethod {
-  card
-  bank_transfer
-  crypto
-  wallet
+  CARD
+  SBP
+  QIWI
+  YOOMONEY
+  BANK_TRANSFER
+  CRYPTO
+  WALLET
+}
+
+enum RefundStatus {
+  PENDING
+  PROCESSING
+  SUCCEEDED
+  FAILED
+}
+
+enum SubscriptionStatus {
+  ACTIVE
+  PAST_DUE
+  CANCELLED
+  UNPAID
+  PAUSED
+  TRIALING
+}
+
+enum SubscriptionInterval {
+  DAY
+  WEEK
+  MONTH
+  YEAR
+}
+
+enum PayoutStatus {
+  PENDING
+  PROCESSING
+  SUCCEEDED
+  FAILED
+  CANCELLED
 }
 
 enum InvoiceStatus {
-  draft
-  open
-  paid
-  void
-  uncollectible
+  DRAFT
+  OPEN
+  PAID
+  VOID
+  UNCOLLECTIBLE
 }
 
 enum WebhookDeliveryStatus {
-  pending
-  success
-  failed
+  PENDING
+  SUCCESS
+  FAILED
+  RETRYING
 }
 
-model User {
-  id          String   @id @default(uuid())
-  email       String   @unique
-  password    String
-  firstName   String?
-  lastName    String?
-  companyName String?
-  avatarUrl   String?
-  role        UserRole @default(user)
-  isVerified  Boolean  @default(false)
-  locale      String   @default("en")
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+enum DocumentType {
+  PASSPORT
+  REGISTRATION_CERTIFICATE
+  TAX_CERTIFICATE
+  BANK_STATEMENT
+  OTHER
+}
 
-  apiKeys          ApiKey[]
-  payments         Payment[]
-  invoices         Invoice[]
-  webhookEndpoints WebhookEndpoint[]
-  customers        Customer[]
+enum DocumentStatus {
+  PENDING
+  APPROVED
+  REJECTED
+}
+
+enum ApiKeyType {
+  LIVE
+  TEST
+}
+
+enum AuditUserType {
+  MERCHANT
+  ADMIN
+  SYSTEM
+  API
+}
+
+// ============================================================================
+// MODELS
+// ============================================================================
+
+// Users - Internal admin users
+model User {
+  id        String   @id @default(uuid())
+  email     String   @unique
+  password  String
+  firstName String?
+  lastName  String?
+  role      UserRole @default(user)
+  isActive  Boolean  @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
   @@map("users")
 }
 
+// Merchants - Payment system merchants
+model Merchant {
+  id                 String             @id @default(uuid())
+  email              String             @unique
+  passwordHash       String
+  companyName        String
+  legalName          String?
+  inn                String?
+  kpp                String?
+  phone              String?
+  website            String?
+  status             MerchantStatus     @default(PENDING)
+  verificationStatus VerificationStatus @default(NOT_VERIFIED)
+  settings           Json               @default("{}")
+  timezone           String             @default("UTC")
+  currency           String             @default("RUB")
+  dailyLimit         Int?
+  monthlyLimit       Int?
+  transactionLimit   Int?
+  feePercent         Float              @default(2.9)
+  fixedFee           Int                @default(0)
+  twoFactorSecret    String?
+  twoFactorEnabled   Boolean            @default(false)
+  createdAt          DateTime           @default(now())
+  updatedAt          DateTime           @updatedAt
+
+  projects          Project[]
+  apiKeys           ApiKey[]
+  transactions      Transaction[]
+  refunds           Refund[]
+  subscriptions     Subscription[]
+  subscriptionPlans SubscriptionPlan[]
+  paymentTokens     PaymentToken[]
+  balances          Balance[]
+  payouts           Payout[]
+  webhookEndpoints  WebhookEndpoint[]
+  documents         Document[]
+  auditLogs         AuditLog[]
+  customers         Customer[]
+  invoices          Invoice[]
+
+  @@index([email])
+  @@index([status])
+  @@map("merchants")
+}
+
+// Projects - Merchant's stores/projects
+model Project {
+  id             String   @id @default(uuid())
+  merchantId     String
+  merchant       Merchant @relation(fields: [merchantId], references: [id], onDelete: Cascade)
+  name           String
+  description    String?
+  website        String?
+  isLive         Boolean  @default(false)
+  settings       Json     @default("{}")
+  logoUrl        String?
+  brandColor     String?
+  allowedMethods String[] @default([])
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+
+  apiKeys      ApiKey[]
+  transactions Transaction[]
+
+  @@index([merchantId])
+  @@map("projects")
+}
+
+// API Keys
 model ApiKey {
-  id          String    @id @default(uuid())
-  userId      String
-  user        User      @relation(fields: [userId], references: [id], onDelete: Cascade)
+  id          String     @id @default(uuid())
+  merchantId  String
+  merchant    Merchant   @relation(fields: [merchantId], references: [id], onDelete: Cascade)
+  projectId   String?
+  project     Project?   @relation(fields: [projectId], references: [id], onDelete: Cascade)
   name        String
   keyHash     String
   keyPrefix   String
-  isLive      Boolean   @default(false)
-  isActive    Boolean   @default(true)
-  permissions String[]  @default([])
-  expiresAt   DateTime?
+  type        ApiKeyType @default(TEST)
+  permissions String[]   @default([])
+  ipWhitelist String[]   @default([])
+  rateLimit   Int        @default(1000)
+  isActive    Boolean    @default(true)
   lastUsedAt  DateTime?
-  createdAt   DateTime  @default(now())
-  updatedAt   DateTime  @updatedAt
+  expiresAt   DateTime?
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @updatedAt
 
-  @@index([userId])
+  @@index([merchantId])
+  @@index([projectId])
   @@index([keyPrefix])
   @@map("api_keys")
 }
 
+// Customers - Merchant's customers
 model Customer {
   id         String   @id @default(uuid())
-  userId     String
-  user       User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  merchantId String
+  merchant   Merchant @relation(fields: [merchantId], references: [id], onDelete: Cascade)
   email      String
-  name       String?
   phone      String?
-  externalId String?
+  name       String?
   metadata   Json     @default("{}")
   createdAt  DateTime @default(now())
   updatedAt  DateTime @updatedAt
 
-  payments Payment[]
-  invoices Invoice[]
+  transactions  Transaction[]
+  subscriptions Subscription[]
+  paymentTokens PaymentToken[]
+  invoices      Invoice[]
 
-  @@index([userId])
+  @@unique([merchantId, email])
+  @@index([merchantId])
   @@index([email])
-  @@index([externalId])
   @@map("customers")
 }
 
-model Payment {
-  id             String         @id
-  userId         String
-  user           User           @relation(fields: [userId], references: [id], onDelete: Cascade)
-  customerId     String?
-  customer       Customer?      @relation(fields: [customerId], references: [id])
-  amount         Int
-  currency       String
-  status         PaymentStatus  @default(pending)
-  method         PaymentMethod?
-  description    String?
-  metadata       Json           @default("{}")
-  failureCode    String?
-  failureMessage String?
-  refundedAmount Int            @default(0)
-  paidAt         DateTime?
-  createdAt      DateTime       @default(now())
-  updatedAt      DateTime       @updatedAt
+// Transactions - Payments
+model Transaction {
+  id                 String         @id
+  merchantId         String
+  merchant           Merchant       @relation(fields: [merchantId], references: [id], onDelete: Cascade)
+  projectId          String?
+  project            Project?       @relation(fields: [projectId], references: [id])
+  orderId            String
+  externalId         String?
+  amount             Int
+  currency           String
+  amountRefunded     Int            @default(0)
+  feeAmount          Int            @default(0)
+  netAmount          Int            @default(0)
+  status             PaymentStatus  @default(PENDING)
+  paymentMethod      PaymentMethod?
+  description        String?
+  metadata           Json           @default("{}")
+  customerEmail      String?
+  customerPhone      String?
+  customerName       String?
+  customerId         String?
+  customer           Customer?      @relation(fields: [customerId], references: [id])
+  ipAddress          String?
+  country            String?
+  city               String?
+  cardBrand          String?
+  cardLast4          String?
+  cardExpMonth       Int?
+  cardExpYear        Int?
+  threeDSecureStatus String?
+  failureCode        String?
+  failureMessage     String?
+  subscriptionId     String?
+  subscription       Subscription?  @relation(fields: [subscriptionId], references: [id])
+  returnUrl          String?
+  cancelUrl          String?
+  paymentUrl         String?
+  paidAt             DateTime?
+  cancelledAt        DateTime?
+  refundedAt         DateTime?
+  expiresAt          DateTime?
+  createdAt          DateTime       @default(now())
+  updatedAt          DateTime       @updatedAt
 
-  @@index([userId])
+  refunds         Refund[]
+  webhookAttempts WebhookAttempt[]
+
+  @@unique([merchantId, orderId])
+  @@index([merchantId])
+  @@index([projectId])
   @@index([customerId])
   @@index([status])
   @@index([createdAt])
-  @@map("payments")
+  @@map("transactions")
 }
 
+// Refunds
+model Refund {
+  id             String       @id @default(uuid())
+  merchantId     String
+  merchant       Merchant     @relation(fields: [merchantId], references: [id], onDelete: Cascade)
+  transactionId  String
+  transaction    Transaction  @relation(fields: [transactionId], references: [id], onDelete: Cascade)
+  amount         Int
+  reason         String?
+  description    String?
+  status         RefundStatus @default(PENDING)
+  failureCode    String?
+  failureMessage String?
+  processedAt    DateTime?
+  createdAt      DateTime     @default(now())
+  updatedAt      DateTime     @updatedAt
+
+  @@index([transactionId])
+  @@index([merchantId])
+  @@index([status])
+  @@map("refunds")
+}
+
+// Subscription Plans
+model SubscriptionPlan {
+  id            String               @id @default(uuid())
+  merchantId    String
+  merchant      Merchant             @relation(fields: [merchantId], references: [id], onDelete: Cascade)
+  name          String
+  description   String?
+  amount        Int
+  currency      String
+  interval      SubscriptionInterval
+  intervalCount Int                  @default(1)
+  trialDays     Int                  @default(0)
+  isActive      Boolean              @default(true)
+  metadata      Json                 @default("{}")
+  createdAt     DateTime             @default(now())
+  updatedAt     DateTime             @updatedAt
+
+  subscriptions Subscription[]
+
+  @@index([merchantId])
+  @@map("subscription_plans")
+}
+
+// Subscriptions
+model Subscription {
+  id                 String             @id @default(uuid())
+  merchantId         String
+  merchant           Merchant           @relation(fields: [merchantId], references: [id], onDelete: Cascade)
+  customerId         String
+  customer           Customer           @relation(fields: [customerId], references: [id], onDelete: Cascade)
+  customerEmail      String
+  planId             String?
+  plan               SubscriptionPlan?  @relation(fields: [planId], references: [id])
+  amount             Int
+  currency           String
+  status             SubscriptionStatus @default(ACTIVE)
+  currentPeriodStart DateTime
+  currentPeriodEnd   DateTime
+  cancelledAt        DateTime?
+  endedAt            DateTime?
+  trialStart         DateTime?
+  trialEnd           DateTime?
+  paymentTokenId     String?
+  paymentToken       PaymentToken?      @relation(fields: [paymentTokenId], references: [id])
+  metadata           Json               @default("{}")
+  createdAt          DateTime           @default(now())
+  updatedAt          DateTime           @updatedAt
+
+  transactions Transaction[]
+
+  @@index([merchantId])
+  @@index([customerId])
+  @@index([status])
+  @@map("subscriptions")
+}
+
+// Payment Tokens - Saved cards for recurring
+model PaymentToken {
+  id             String   @id @default(uuid())
+  merchantId     String
+  merchant       Merchant @relation(fields: [merchantId], references: [id], onDelete: Cascade)
+  customerId     String
+  customer       Customer @relation(fields: [customerId], references: [id], onDelete: Cascade)
+  token          String   @unique
+  cardBrand      String?
+  cardLast4      String?
+  cardExpMonth   Int?
+  cardExpYear    Int?
+  cardholderName String?
+  isActive       Boolean  @default(true)
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+
+  subscriptions Subscription[]
+
+  @@index([merchantId])
+  @@index([customerId])
+  @@map("payment_tokens")
+}
+
+// Balances
+model Balance {
+  id         String   @id @default(uuid())
+  merchantId String
+  merchant   Merchant @relation(fields: [merchantId], references: [id], onDelete: Cascade)
+  currency   String
+  available  Int      @default(0)
+  pending    Int      @default(0)
+  reserved   Int      @default(0)
+  updatedAt  DateTime @updatedAt
+
+  @@unique([merchantId, currency])
+  @@index([merchantId])
+  @@map("balances")
+}
+
+// Payouts
+model Payout {
+  id             String       @id @default(uuid())
+  merchantId     String
+  merchant       Merchant     @relation(fields: [merchantId], references: [id], onDelete: Cascade)
+  amount         Int
+  currency       String
+  feeAmount      Int          @default(0)
+  netAmount      Int
+  status         PayoutStatus @default(PENDING)
+  bankAccount    String?
+  bankName       String?
+  bik            String?
+  failureCode    String?
+  failureMessage String?
+  description    String?
+  metadata       Json         @default("{}")
+  processedAt    DateTime?
+  createdAt      DateTime     @default(now())
+  updatedAt      DateTime     @updatedAt
+
+  @@index([merchantId])
+  @@index([status])
+  @@map("payouts")
+}
+
+// Invoices
 model Invoice {
   id         String        @id @default(uuid())
-  userId     String
-  user       User          @relation(fields: [userId], references: [id], onDelete: Cascade)
+  merchantId String
+  merchant   Merchant      @relation(fields: [merchantId], references: [id], onDelete: Cascade)
   customerId String?
   customer   Customer?     @relation(fields: [customerId], references: [id])
   number     String
-  status     InvoiceStatus @default(draft)
-  currency   String        @default("USD")
+  status     InvoiceStatus @default(DRAFT)
+  currency   String        @default("RUB")
   subtotal   Int           @default(0)
   tax        Int           @default(0)
   total      Int           @default(0)
@@ -155,12 +486,13 @@ model Invoice {
 
   items InvoiceItem[]
 
-  @@unique([userId, number])
-  @@index([userId])
+  @@unique([merchantId, number])
+  @@index([merchantId])
   @@index([status])
   @@map("invoices")
 }
 
+// Invoice Items
 model InvoiceItem {
   id          String  @id @default(uuid())
   invoiceId   String
@@ -174,40 +506,106 @@ model InvoiceItem {
   @@map("invoice_items")
 }
 
+// Webhook Endpoints
 model WebhookEndpoint {
-  id                 String    @id @default(uuid())
-  userId             String
-  user               User      @relation(fields: [userId], references: [id], onDelete: Cascade)
-  url                String
-  events             String[]
-  secret             String
-  description        String?
-  isActive           Boolean   @default(true)
-  lastDeliveryAt     DateTime?
-  lastDeliveryStatus WebhookDeliveryStatus?
-  createdAt          DateTime  @default(now())
-  updatedAt          DateTime  @updatedAt
+  id            String    @id @default(uuid())
+  merchantId    String
+  merchant      Merchant  @relation(fields: [merchantId], references: [id], onDelete: Cascade)
+  url           String
+  secret        String
+  events        String[]
+  isActive      Boolean   @default(true)
+  successCount  Int       @default(0)
+  failureCount  Int       @default(0)
+  lastSuccessAt DateTime?
+  lastFailureAt DateTime?
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
 
-  deliveries WebhookDelivery[]
+  attempts WebhookAttempt[]
 
-  @@index([userId])
+  @@index([merchantId])
   @@map("webhook_endpoints")
 }
 
-model WebhookDelivery {
-  id             String                @id @default(uuid())
-  endpointId     String
-  endpoint       WebhookEndpoint       @relation(fields: [endpointId], references: [id], onDelete: Cascade)
-  eventType      String
-  payload        Json
-  responseStatus Int?
-  responseBody   String?
-  attempts       Int                   @default(1)
-  status         WebhookDeliveryStatus @default(pending)
-  nextRetryAt    DateTime?
-  createdAt      DateTime              @default(now())
+// Webhook Attempts
+model WebhookAttempt {
+  id            String                @id @default(uuid())
+  endpointId    String
+  endpoint      WebhookEndpoint       @relation(fields: [endpointId], references: [id], onDelete: Cascade)
+  transactionId String?
+  transaction   Transaction?          @relation(fields: [transactionId], references: [id])
+  event         String
+  payload       Json
+  status        WebhookDeliveryStatus @default(PENDING)
+  statusCode    Int?
+  responseBody  String?
+  errorMessage  String?
+  attemptNumber Int                   @default(1)
+  nextRetryAt   DateTime?
+  createdAt     DateTime              @default(now())
 
   @@index([endpointId])
+  @@index([transactionId])
   @@index([status])
-  @@map("webhook_deliveries")
+  @@map("webhook_attempts")
+}
+
+// Documents - Verification documents
+model Document {
+  id              String         @id @default(uuid())
+  merchantId      String
+  merchant        Merchant       @relation(fields: [merchantId], references: [id], onDelete: Cascade)
+  type            DocumentType
+  fileName        String
+  fileUrl         String
+  fileSize        Int
+  mimeType        String
+  status          DocumentStatus @default(PENDING)
+  rejectionReason String?
+  verifiedAt      DateTime?
+  verifiedBy      String?
+  createdAt       DateTime       @default(now())
+  updatedAt       DateTime       @updatedAt
+
+  @@index([merchantId])
+  @@map("documents")
+}
+
+// Audit Logs
+model AuditLog {
+  id         String        @id @default(uuid())
+  merchantId String?
+  merchant   Merchant?     @relation(fields: [merchantId], references: [id], onDelete: SetNull)
+  userId     String?
+  userType   AuditUserType
+  action     String
+  resource   String
+  resourceId String?
+  oldData    Json?
+  newData    Json?
+  ipAddress  String?
+  userAgent  String?
+  createdAt  DateTime      @default(now())
+
+  @@index([merchantId])
+  @@index([action])
+  @@index([resource])
+  @@index([createdAt])
+  @@map("audit_logs")
+}
+
+// Sessions - For JWT refresh tokens
+model Session {
+  id           String   @id @default(uuid())
+  merchantId   String
+  refreshToken String   @unique
+  userAgent    String?
+  ipAddress    String?
+  expiresAt    DateTime
+  createdAt    DateTime @default(now())
+
+  @@index([merchantId])
+  @@index([refreshToken])
+  @@map("sessions")
 }

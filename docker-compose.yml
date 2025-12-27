@@ -19,6 +19,8 @@ services:
       interval: 10s
       timeout: 5s
       retries: 5
+    networks:
+      - exora-network
 
   redis:
     image: redis:7-alpine
@@ -34,6 +36,29 @@ services:
       interval: 10s
       timeout: 5s
       retries: 5
+    networks:
+      - exora-network
+
+  rabbitmq:
+    image: rabbitmq:3.12-management-alpine
+    container_name: exora-rabbitmq
+    restart: unless-stopped
+    environment:
+      RABBITMQ_DEFAULT_USER: exora
+      RABBITMQ_DEFAULT_PASS: exora_rabbit_2024
+      RABBITMQ_DEFAULT_VHOST: exora
+    ports:
+      - "5672:5672"   # AMQP
+      - "15672:15672" # Management UI
+    volumes:
+      - rabbitmq_data:/var/lib/rabbitmq
+    healthcheck:
+      test: ["CMD", "rabbitmq-diagnostics", "-q", "ping"]
+      interval: 30s
+      timeout: 10s
+      retries: 5
+    networks:
+      - exora-network
 
   mailhog:
     image: mailhog/mailhog:latest
@@ -44,7 +69,14 @@ services:
       - "8025:8025"  # Web UI
     logging:
       driver: none
+    networks:
+      - exora-network
 
 volumes:
   postgres_data:
   redis_data:
+  rabbitmq_data:
+
+networks:
+  exora-network:
+    driver: bridge

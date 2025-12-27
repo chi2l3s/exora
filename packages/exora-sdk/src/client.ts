@@ -1,4 +1,4 @@
-import {
+import type {
   ExoraOptions,
   RequestOptions,
   Locale,
@@ -15,10 +15,15 @@ import { Invoices } from './resources/invoices';
 import { Customers } from './resources/customers';
 import { Webhooks } from './resources/webhooks';
 import { ApiKeys } from './resources/api-keys';
+import { Refunds } from './resources/refunds';
+import { Subscriptions } from './resources/subscriptions';
+import { Payouts } from './resources/payouts';
+import { Balances } from './resources/balances';
 
 const DEFAULT_BASE_URL = 'https://api.exora.io';
 const DEFAULT_TIMEOUT = 30000;
 const DEFAULT_MAX_RETRIES = 3;
+const SDK_VERSION = '1.0.0';
 
 export class ExoraClient {
   private readonly apiKey: string;
@@ -27,11 +32,16 @@ export class ExoraClient {
   private readonly timeout: number;
   private readonly maxRetries: number;
 
+  // Resources
   public readonly payments: Payments;
   public readonly invoices: Invoices;
   public readonly customers: Customers;
   public readonly webhooks: Webhooks;
   public readonly apiKeys: ApiKeys;
+  public readonly refunds: Refunds;
+  public readonly subscriptions: Subscriptions;
+  public readonly payouts: Payouts;
+  public readonly balances: Balances;
 
   constructor(options: ExoraOptions | string) {
     if (typeof options === 'string') {
@@ -58,8 +68,15 @@ export class ExoraClient {
     this.customers = new Customers(this);
     this.webhooks = new Webhooks(this);
     this.apiKeys = new ApiKeys(this);
+    this.refunds = new Refunds(this);
+    this.subscriptions = new Subscriptions(this);
+    this.payouts = new Payouts(this);
+    this.balances = new Balances(this);
   }
 
+  /**
+   * Make an API request
+   */
   async request<T>(options: RequestOptions): Promise<T> {
     const { method, path, body, query } = options;
 
@@ -69,7 +86,11 @@ export class ExoraClient {
       const params = new URLSearchParams();
       Object.entries(query).forEach(([key, value]) => {
         if (value !== undefined && value !== null) {
-          params.append(key, String(value));
+          if (Array.isArray(value)) {
+            value.forEach(v => params.append(key, String(v)));
+          } else {
+            params.append(key, String(value));
+          }
         }
       });
       const queryString = params.toString();
@@ -82,7 +103,7 @@ export class ExoraClient {
       'Content-Type': 'application/json',
       'Authorization': `Bearer ${this.apiKey}`,
       'Accept-Language': this.locale,
-      'X-Exora-Client': 'exora-sdk-node/1.0.0',
+      'X-Exora-Client': `exora-sdk-node/${SDK_VERSION}`,
     };
 
     let lastError: Error | null = null;
@@ -106,13 +127,27 @@ export class ExoraClient {
           throw this.handleErrorResponse(response.status, errorData);
         }
 
-        return await response.json();
+        // Handle empty responses
+        const contentType = response.headers.get('content-type');
+        if (contentType?.includes('application/json')) {
+          return await response.json();
+        }
+
+        return {} as T;
       } catch (error) {
         lastError = error as Error;
 
         // Don't retry on client errors (4xx)
         if (error instanceof ExoraError && error.statusCode && error.statusCode < 500) {
           throw error;
+        }
+
+        // Don't retry on abort
+        if (error instanceof Error && error.name === 'AbortError') {
+          throw new ExoraError(
+            { code: 'timeout', message: 'Request timed out' },
+            this.locale
+          );
         }
 
         // Wait before retrying (exponential backoff)
@@ -125,21 +160,22 @@ export class ExoraClient {
     throw lastError || new ExoraError({ code: 'api_error', message: 'Request failed' }, this.locale);
   }
 
-  private handleErrorResponse(statusCode: number, data: any): ExoraError {
-    const message = data.message || data.error || '';
+  private handleErrorResponse(statusCode: number, data: Record<string, unknown>): ExoraError {
+    const message = (data.message as string) || (data.error as string) || 'An error occurred';
+    const code = (data.code as string) || 'api_error';
 
     switch (statusCode) {
       case 401:
         return new AuthenticationError(message, this.locale);
       case 400:
-        return new InvalidRequestError(message, data.details, this.locale);
+        return new InvalidRequestError(message, data.details as Record<string, unknown>, this.locale);
       case 404:
         return new NotFoundError(message, this.locale);
       case 429:
         return new RateLimitError(message, this.locale);
       default:
         return new ExoraError(
-          { code: 'api_error', message, statusCode, details: data },
+          { code, message, statusCode, details: data },
           this.locale,
         );
     }
@@ -147,6 +183,13 @@ export class ExoraClient {
 
   private sleep(ms: number): Promise<void> {
     return new Promise(resolve => setTimeout(resolve, ms));
+  }
+
+  /**
+   * Get SDK version
+   */
+  static get VERSION(): string {
+    return SDK_VERSION;
   }
 }
 
